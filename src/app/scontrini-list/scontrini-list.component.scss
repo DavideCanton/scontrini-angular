@@ -1,0 +1,10 @@
+@import '~variables.scss';
+
+.scontrini-list-container {
+    padding: $standardPadding;
+    height: calc(100% - #{2 * $standardPadding});
+}
+
+ngx-datatable {
+    height: 100%;
+}

@@ -1,0 +1,13 @@
+$standardPadding: 10px;
+$topbarHeight: 60px;
+
+$successColor: green;
+$dangerColor: red;
+
+@mixin pos-abs($top, $bottom, $left, $right) {
+    position: absolute;
+    top: $top;
+    bottom: $bottom;
+    left: $left;
+    right: $right;
+}
