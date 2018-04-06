@@ -1,48 +1,32 @@
-import { JsonMapper, JsonProperty, JsonClass, JsonComplexProperty } from './json-mapper';
+import { JsonMapper, JsonProperty, JsonComplexProperty } from './json-mapper';
 
-@JsonClass()
 class Address {
     @JsonProperty()
-    line1: string;
+    line1: string = "";
 
     @JsonProperty()
-    line2: string;
-
-    constructor() {
-        this.line1 = undefined;
-        this.line2 = undefined;
-    }
+    line2: string = "";
 }
 
 enum Sesso {
     M = 0, F = 1
 }
 
-@JsonClass()
 class Person {
-
     @JsonProperty()
-    firstName: string;
+    firstName: string = "";
 
     @JsonProperty(Person.mapLastName)
-    lastName: string;
+    lastName: string = "";
 
     @JsonProperty('eta')
-    age: number;
+    age: number = -1;
 
     @JsonProperty()
-    sex: Sesso;
+    sex: Sesso = Sesso.M;
 
     @JsonComplexProperty(Address)
-    address: Address;
-
-    constructor() {
-        this.firstName = undefined;
-        this.lastName = undefined;
-        this.age = undefined;
-        this.address = undefined;
-        this.sex = undefined;
-    }
+    address: Address = new Address();
 
     static mapLastName(s: string) : string {
         return s.toUpperCase();

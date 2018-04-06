@@ -1,14 +1,16 @@
 /// <reference path="../../../node_modules/reflect-metadata/standalone.d.ts" />
-import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
 
 const mappingMetadataKey = Symbol("mappingMetadataKey");
 
-export function JsonComplexProperty(constructor: Function) {
-    return Reflect.metadata(mappingMetadataKey, { type: constructor });
+type MappingFn<T, R> = (val: T) => R;
+type Constructable<T> = { new(): T };
+
+export function JsonComplexProperty(constructor: Constructable<any>) {
+    const opts: IMappingOptions<any, any> = { complexType: constructor };
+    return Reflect.metadata(mappingMetadataKey, opts);
 }
 
-export function JsonProperty(params?: string | ((val) => any) | IMapOptions) {
+export function JsonProperty(params?: string | MappingFn<any, any> | IMappingOptions<any, any>) {
     if (!params)
         params = {};
 
@@ -21,21 +23,21 @@ export function JsonProperty(params?: string | ((val) => any) | IMapOptions) {
 }
 
 export class JsonMapper {
-    static deserialize<T>(ctor: { new(): T }, jsonObj: any) {
+    static deserialize<T>(ctor: Constructable<T>, jsonObj: any) {
         let obj = new ctor();
 
         Object.keys(obj).forEach(propName => {
-            let opt = <IMapOptions>Reflect.getMetadata(mappingMetadataKey, obj, propName);
+            let opt: IMappingOptions<any, any> = Reflect.getMetadata(mappingMetadataKey, obj, propName);
 
             if (opt === undefined)
                 return;
 
-            let name = opt.name || propName;
+            const name = opt.name || propName;
 
             let value;
 
-            if (opt.type)
-                value = this.deserialize(opt.type, jsonObj[name]);
+            if (opt.complexType)
+                value = this.deserialize(opt.complexType, jsonObj[name]);
             else if (opt.mappingFn)
                 value = opt.mappingFn(jsonObj[name]);
             else
@@ -48,25 +50,9 @@ export class JsonMapper {
     }
 }
 
-export interface IMappingClassInfo {
-    enabled: boolean
-}
 
-export interface IMapOptions {
+export interface IMappingOptions<T, R> {
     name?: string,
-    mappingFn?: (val) => any,
-    type?: { new(): any }
+    mappingFn?: MappingFn<T, R>,
+    complexType?: Constructable<R>
 }
-
-
-declare module "rxjs/Observable" {
-    interface Observable<T> {
-        mapModel: <U> (ctor: { new(): U }) => Observable<U>;
-    }
-}
-
-function mapModel<T, U>(this: Observable<T>, ctor: { new(): U }): Observable<U> {
-    return this.map(v => JsonMapper.deserialize(ctor, v));
-}
-
-Observable.prototype.mapModel = mapModel;

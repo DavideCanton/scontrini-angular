@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
 import { Scontrino } from '../../models/scontrino';
 import { IScontriniRetriever } from '../interfaces/scontrini-retriever';
-import { JsonMapper } from '../../utils/json-mapper';
+import '../../utils/json-mapper-rxext';
 
 @Injectable()
 export class ScontriniHttpService implements IScontriniRetriever {

@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/from';
 import { Scontrino } from '../../models/scontrino';
 import * as moment from 'moment';
-import { JsonMapper } from '../../utils/json-mapper';
+import '../../utils/json-mapper-rxext';
 
 @Injectable()
 export class ScontriniMockService implements IScontriniRetriever {
