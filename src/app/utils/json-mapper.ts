@@ -1,9 +1,24 @@
 /// <reference path="../../../node_modules/reflect-metadata/standalone.d.ts" />
 
-const mappingMetadataKey = Symbol("mappingMetadataKey");
+const mappingMetadataKey = Symbol('mappingMetadataKey');
 
-type MappingFn<T, R> = (val: T) => R;
-type Constructable<T> = { new(): T };
+export type MappingFn<T, R> = (val: T) => R;
+
+export interface Constructable<T> {
+    new (...args: any[]): T;
+}
+
+export interface JsonSerializable {
+    serialize(): string;
+}
+
+export function JsonClass<T extends Constructable<{}>>(constructor: T) {
+    return class extends constructor implements JsonSerializable {
+        serialize(): string {
+            return JsonMapper.serialize(this);
+        }
+    };
+}
 
 export function JsonComplexProperty(constructor: Constructable<any>) {
     const opts: IMappingOptions<any, any> = { complexType: constructor };
@@ -23,11 +38,41 @@ export function JsonProperty(params?: string | MappingFn<any, any> | IMappingOpt
 }
 
 export class JsonMapper {
+
+    static serialize(val: any): string {
+        const obj = {};
+
+        Object.keys(val).forEach(propName => {
+            const opt: IMappingOptions<any, any> = Reflect.getMetadata(mappingMetadataKey, val, propName);
+
+            if (opt === undefined)
+                return;
+
+            const name = opt.name || propName;
+
+            let value;
+
+            if (opt.complexType)
+                value = JSON.parse(val[propName].serialize());
+            else if (opt.serializeFn)
+                value = opt.serializeFn(val[propName]);
+            else
+                value = val[propName];
+
+            obj[name] = value;
+        });
+
+        return JSON.stringify(obj);
+    }
+
     static deserialize<T>(ctor: Constructable<T>, jsonObj: any) {
-        let obj = new ctor();
+        if (typeof jsonObj === 'string')
+            jsonObj = JSON.parse(jsonObj);
+
+        const obj = new ctor();
 
         Object.keys(obj).forEach(propName => {
-            let opt: IMappingOptions<any, any> = Reflect.getMetadata(mappingMetadataKey, obj, propName);
+            const opt: IMappingOptions<any, any> = Reflect.getMetadata(mappingMetadataKey, obj, propName);
 
             if (opt === undefined)
                 return;
@@ -52,7 +97,8 @@ export class JsonMapper {
 
 
 export interface IMappingOptions<T, R> {
-    name?: string,
-    mappingFn?: MappingFn<T, R>,
-    complexType?: Constructable<R>
+    name?: string;
+    mappingFn?: MappingFn<T, R>;
+    serializeFn?: MappingFn<T, string>;
+    complexType?: Constructable<R>;
 }

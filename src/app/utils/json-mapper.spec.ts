@@ -1,26 +1,30 @@
-import { JsonMapper, JsonProperty, JsonComplexProperty } from './json-mapper';
+import { JsonMapper, JsonProperty, JsonComplexProperty, JsonClass, JsonSerializable } from './json-mapper';
 
-class Address {
+@JsonClass
+class Address implements JsonSerializable {
     @JsonProperty()
-    line1: string = "";
+    line1 = '';
 
     @JsonProperty()
-    line2: string = "";
+    line2 = '';
+
+    serialize: () => string;
 }
 
 enum Sesso {
     M = 0, F = 1
 }
 
-class Person {
+@JsonClass
+class Person implements JsonSerializable {
     @JsonProperty()
-    firstName: string = "";
+    firstName = '';
 
     @JsonProperty(Person.mapLastName)
-    lastName: string = "";
+    lastName = '';
 
     @JsonProperty('eta')
-    age: number = -1;
+    age = -1;
 
     @JsonProperty()
     sex: Sesso = Sesso.M;
@@ -28,15 +32,17 @@ class Person {
     @JsonComplexProperty(Address)
     address: Address = new Address();
 
-    static mapLastName(s: string) : string {
+    serialize: () => string;
+
+    static mapLastName(s: string): string {
         return s.toUpperCase();
     }
 }
 
 
-describe("Mapper tests", () => {
-    it("should map", () => {
-        let obj = {
+describe('Mapper tests', () => {
+    it('should deserialize', () => {
+        const obj = {
             firstName: 'Piero',
             lastName: 'Gorgi',
             eta: 16,
@@ -47,7 +53,7 @@ describe("Mapper tests", () => {
             }
         };
 
-        let p = JsonMapper.deserialize(Person, obj);
+        const p = JsonMapper.deserialize(Person, obj);
 
         expect(p).toBeTruthy();
         expect(p.address).toBeTruthy();
@@ -61,5 +67,31 @@ describe("Mapper tests", () => {
         expect(p.sex).toBe(Sesso.F);
         expect(p.address.line1).toBe(obj.address.line1);
         expect(p.address.line2).toBe(obj.address.line2);
+    });
+
+    it('should serialize', () => {
+        const obj = {
+            firstName: 'Piero',
+            lastName: 'Gorgi',
+            eta: 16,
+            sex: 1,
+            address: {
+                line1: 'a',
+                line2: 'b'
+            }
+        };
+
+        const p = JsonMapper.deserialize(Person, obj);
+
+        const s = p.serialize();
+
+        const p2 = JsonMapper.deserialize(Person, s);
+
+        expect(p2.firstName).toBe(p.firstName);
+        expect(p2.lastName).toBe(p.lastName);
+        expect(p2.age).toBe(p.age);
+        expect(p2.sex).toBe(p.sex);
+        expect(p2.address.line1).toBe(p.address.line1);
+        expect(p2.address.line2).toBe(p.address.line2);
     });
 });
