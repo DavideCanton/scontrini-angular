@@ -1,14 +1,17 @@
-import { JsonMapper, JsonProperty, JsonComplexProperty, JsonClass, JsonSerializable } from './json-mapper';
+import {
+    JsonMapper, JsonProperty, JsonComplexProperty, JsonClass, JsonSerializable,
+    SerializeFn, JsonArray, JsonArrayOfComplexProperty
+} from './json-mapper';
 
 @JsonClass
-class Address implements JsonSerializable {
+class Address {
     @JsonProperty()
     line1 = '';
 
     @JsonProperty()
     line2 = '';
 
-    serialize: () => string;
+    serialize: SerializeFn;
 }
 
 enum Sesso {
@@ -16,7 +19,7 @@ enum Sesso {
 }
 
 @JsonClass
-class Person implements JsonSerializable {
+class Person {
     @JsonProperty()
     firstName = '';
 
@@ -32,7 +35,10 @@ class Person implements JsonSerializable {
     @JsonComplexProperty(Address)
     address: Address = new Address();
 
-    serialize: () => string;
+    @JsonArrayOfComplexProperty(Address)
+    prevAddresses: Address[] = [];
+
+    serialize: SerializeFn;
 
     static mapLastName(s: string): string {
         return s.toUpperCase();
@@ -50,7 +56,17 @@ describe('Mapper tests', () => {
             address: {
                 line1: 'a',
                 line2: 'b'
-            }
+            },
+            prevAddresses: [
+                {
+                    line1: 'c',
+                    line2: 'd'
+                },
+                {
+                    line1: 'e',
+                    line2: 'f'
+                }
+            ]
         };
 
         const p = JsonMapper.deserialize(Person, obj);
@@ -67,6 +83,14 @@ describe('Mapper tests', () => {
         expect(p.sex).toBe(Sesso.F);
         expect(p.address.line1).toBe(obj.address.line1);
         expect(p.address.line2).toBe(obj.address.line2);
+
+        expect(p.prevAddresses.length).toBe(obj.prevAddresses.length);
+
+        expect(p.prevAddresses[0].line1).toBe(obj.prevAddresses[0].line1);
+        expect(p.prevAddresses[0].line2).toBe(obj.prevAddresses[0].line2);
+
+        expect(p.prevAddresses[1].line1).toBe(obj.prevAddresses[1].line1);
+        expect(p.prevAddresses[1].line2).toBe(obj.prevAddresses[1].line2);
     });
 
     it('should serialize', () => {
@@ -78,7 +102,17 @@ describe('Mapper tests', () => {
             address: {
                 line1: 'a',
                 line2: 'b'
-            }
+            },
+            prevAddresses: [
+                {
+                    line1: 'c',
+                    line2: 'd'
+                },
+                {
+                    line1: 'e',
+                    line2: 'f'
+                }
+            ]
         };
 
         const p = JsonMapper.deserialize(Person, obj);
@@ -93,5 +127,10 @@ describe('Mapper tests', () => {
         expect(p2.sex).toBe(p.sex);
         expect(p2.address.line1).toBe(p.address.line1);
         expect(p2.address.line2).toBe(p.address.line2);
+        expect(p2.prevAddresses.length).toBe(p.prevAddresses.length);
+        expect(p2.prevAddresses[0].line1).toBe(p.prevAddresses[0].line1);
+        expect(p2.prevAddresses[0].line2).toBe(p.prevAddresses[0].line2);
+        expect(p2.prevAddresses[1].line1).toBe(p.prevAddresses[1].line1);
+        expect(p2.prevAddresses[1].line2).toBe(p.prevAddresses[1].line2);
     });
 });
