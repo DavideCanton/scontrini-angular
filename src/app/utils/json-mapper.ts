@@ -52,7 +52,7 @@ export function JsonClass<T extends Constructable<JsonSerializable>>(constructor
     };
 }
 
-function normalizeParams(params: string | MappingFn<any, any> | IMappingOptions<any, any>): IMappingOptions<any, any> {
+function normalizeParams<T, R>(params: string | MappingFn<T, R> | IMappingOptions<T, R>): IMappingOptions<T, R> {
     if (!params)
         params = {};
     if (typeof params === 'string')
@@ -70,8 +70,8 @@ function normalizeParams(params: string | MappingFn<any, any> | IMappingOptions<
  * @param {Constructable<any>} constructor the constructor type of the property.
  * @returns the decorator for the property.
  */
-export function JsonComplexProperty(constructor: Constructable<any>) {
-    const opts: IMappingOptions<any, any> = { complexType: constructor };
+export function JsonComplexProperty<T>(constructor: Constructable<T>) {
+    const opts: IMappingOptions<any, T> = { complexType: constructor };
     return Reflect.metadata(mappingMetadataKey, opts);
 }
 
@@ -83,8 +83,8 @@ export function JsonComplexProperty(constructor: Constructable<any>) {
  * @param {Constructable<any>} constructor the constructor type of the array items.
  * @returns the decorator for the property.
  */
-export function JsonArrayOfComplexProperty(constructor: Constructable<any>) {
-    const opts: IMappingOptions<any, any> = { isArray: true, complexType: constructor };
+export function JsonArrayOfComplexProperty<T>(constructor: Constructable<T>) {
+    const opts: IMappingOptions<any, T> = { isArray: true, complexType: constructor };
     return Reflect.metadata(mappingMetadataKey, opts);
 }
 
@@ -97,7 +97,7 @@ export function JsonArrayOfComplexProperty(constructor: Constructable<any>) {
  * @param {(string | MappingFn<any, any> | IMappingOptions<any, any>)} [params] the params
  * @returns the decorator for the property.
  */
-export function JsonArray(params?: string | MappingFn<any, any> | IMappingOptions<any, any>) {
+export function JsonArray<T, R>(params?: string | MappingFn<T, R> | IMappingOptions<T, R>) {
     params = normalizeParams(params);
     return JsonProperty({ isArray: true, ...params });
 }
@@ -114,7 +114,7 @@ export function JsonArray(params?: string | MappingFn<any, any> | IMappingOption
  * @param {(string | MappingFn<any, any> | IMappingOptions<any, any>)} [params] the params
  * @returns the decorator for the property.
  */
-export function JsonProperty(params?: string | MappingFn<any, any> | IMappingOptions<any, any>) {
+export function JsonProperty<T, R>(params?: string | MappingFn<T, R> | IMappingOptions<T, R>) {
     params = normalizeParams(params);
     return Reflect.metadata(mappingMetadataKey, params);
 }

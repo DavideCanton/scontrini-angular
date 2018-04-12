@@ -32,6 +32,9 @@ class Person {
     @JsonProperty()
     sex: Sesso = Sesso.M;
 
+    @JsonArray()
+    numbers: number[] = [];
+
     @JsonComplexProperty(Address)
     address: Address = new Address();
 
@@ -53,6 +56,7 @@ describe('Mapper tests', () => {
             lastName: 'Gorgi',
             eta: 16,
             sex: 1,
+            numbers: [1, 2, 3],
             address: {
                 line1: 'a',
                 line2: 'b'
@@ -81,6 +85,13 @@ describe('Mapper tests', () => {
         expect(p.lastName).toBe(obj.lastName.toUpperCase());
         expect(p.age).toBe(obj.eta);
         expect(p.sex).toBe(Sesso.F);
+
+        expect(p.numbers.length).toBe(obj.numbers.length);
+
+        expect(p.numbers[0]).toBe(obj.numbers[0]);
+        expect(p.numbers[1]).toBe(obj.numbers[1]);
+        expect(p.numbers[2]).toBe(obj.numbers[2]);
+
         expect(p.address.line1).toBe(obj.address.line1);
         expect(p.address.line2).toBe(obj.address.line2);
 
@@ -99,6 +110,7 @@ describe('Mapper tests', () => {
             lastName: 'Gorgi',
             eta: 16,
             sex: 1,
+            numbers: [1, 2, 3],
             address: {
                 line1: 'a',
                 line2: 'b'
@@ -125,6 +137,10 @@ describe('Mapper tests', () => {
         expect(p2.lastName).toBe(p.lastName);
         expect(p2.age).toBe(p.age);
         expect(p2.sex).toBe(p.sex);
+        expect(p2.numbers.length).toBe(p.numbers.length);
+        expect(p2.numbers[0]).toBe(p.numbers[0]);
+        expect(p2.numbers[1]).toBe(p.numbers[1]);
+        expect(p2.numbers[2]).toBe(p.numbers[2]);
         expect(p2.address.line1).toBe(p.address.line1);
         expect(p2.address.line2).toBe(p.address.line2);
         expect(p2.prevAddresses.length).toBe(p.prevAddresses.length);
