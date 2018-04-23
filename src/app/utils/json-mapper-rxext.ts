@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
-import { JsonMapper, Constructable } from './json-mapper';
+import { Constructable, JsonMapper } from 'at-json';
 
 declare module 'rxjs/Observable' {
     interface Observable<T> {

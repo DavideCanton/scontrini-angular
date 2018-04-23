@@ -1,6 +1,6 @@
 import * as moment from 'moment';
 import { Utils } from '../utils/utils';
-import { JsonProperty } from '../utils/json-mapper';
+import { JsonProperty } from 'at-json';
 
 export class Scontrino {
     @JsonProperty()
@@ -25,10 +25,10 @@ export class Scontrino {
         this.data = undefined;
     }
 
-    get dateString() : string {
-        if(!this.data)
-            return "";
-            
+    get dateString(): string {
+        if (!this.data)
+            return '';
+
         return Utils.formatDate(this.data);
     }
 }
