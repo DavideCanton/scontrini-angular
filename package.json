@@ -5,6 +5,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "cover": "ng test --watch=false --code-coverage --single-run --browsers=ChromeHeadless && start /max coverage/index.html",
     "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
@@ -41,7 +42,7 @@
     "jasmine-core": "~2.8.0",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~2.0.0",
-    "karma-chrome-launcher": "~2.2.0",
+    "karma-chrome-launcher": "^2.2.0",
     "karma-coverage-istanbul-reporter": "^1.4.2",
     "karma-jasmine": "~1.1.0",
     "karma-jasmine-html-reporter": "^0.2.2",
