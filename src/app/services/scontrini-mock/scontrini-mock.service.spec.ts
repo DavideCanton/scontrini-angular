@@ -13,14 +13,6 @@ describe('ScontriniMockService', () => {
     expect(service).toBeTruthy();
   }));
 
-  it('should retrieve 2 scontrini', inject([ScontriniMockService], async (service: ScontriniMockService) => {
-    expect(service).toBeTruthy();
-
-    service.retrieveScontrini().toArray().subscribe(res => {
-      expect(res.length).toBe(2);
-    });
-  }));
-
   it('should retrieve the correct number of scontrini', inject([ScontriniMockService], async (service: ScontriniMockService) => {
     expect(service).toBeTruthy();
 

@@ -10,7 +10,7 @@ import { range } from 'rxjs/observable/range';
 
 @Injectable()
 export class ScontriniMockService implements IScontriniRetriever {
-  n = 2;
+  n = 100;
 
   private static mapScontrini(i: number) {
     return {

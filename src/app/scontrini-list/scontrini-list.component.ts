@@ -6,7 +6,6 @@ import { TableColumn } from '@swimlane/ngx-datatable';
 import { ScontriniMockService } from '../services/scontrini-mock/scontrini-mock.service';
 
 @Component({
-  selector: 'scontrini-list',
   templateUrl: './scontrini-list.component.html',
   styleUrls: ['./scontrini-list.component.scss']
 })
@@ -14,7 +13,6 @@ export class ScontriniListComponent implements OnInit {
 
   scontrini: Scontrino[];
   loading = false;
-  n = 100;
   columns: TableColumn[];
 
   @ViewChild('isPersonaleRow')
@@ -38,8 +36,6 @@ export class ScontriniListComponent implements OnInit {
 
   loadData() {
     this.loading = true;
-
-    (<ScontriniMockService>this.service).n = this.n;
 
     this.service.retrieveScontrini().toArray().subscribe(res => {
       this.scontrini = res;

@@ -39,6 +39,6 @@ describe('ScontriniListComponent', () => {
 
     const body = fixture.debugElement.query(By.css('datatable-body'));
     const value = parseInt(body.attributes['ng-reflect-row-count'], 10);
-    expect(value).toBe(component.n);
+    expect(value).toBe(100);
   });
 });
