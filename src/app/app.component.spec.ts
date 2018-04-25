@@ -4,9 +4,9 @@ import { IScontriniRetrieverConfigToken } from './services/interfaces/scontrini-
 import { ScontriniMockService } from './services/scontrini-mock/scontrini-mock.service';
 import { By } from '@angular/platform-browser';
 import { BadgeComponent } from './badge/badge.component';
-import { RouterModule } from '@angular/router';
 import { APP_BASE_HREF } from '@angular/common';
 import { TopbarComponent } from './topbar/topbar.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -16,10 +16,7 @@ describe('AppComponent', () => {
         BadgeComponent,
         TopbarComponent
       ],
-      imports: [RouterModule.forRoot(
-        [],
-        { enableTracing: true } // <-- debugging purposes only
-      )],
+      imports: [RouterTestingModule],
       providers: [
         { provide: APP_BASE_HREF, useValue: '/' }
       ]

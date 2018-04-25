@@ -1,4 +1,4 @@
-import { TestBed, inject } from '@angular/core/testing';
+import { TestBed, inject, async } from '@angular/core/testing';
 
 import { TestService } from './test.service';
 import { ait } from '../../utils/utils';
@@ -10,7 +10,7 @@ describe('TestService', () => {
     });
   });
 
-  ait('should be created', [TestService], async (service: TestService) => {
+  it('should be created', async(inject([TestService], async (service: TestService) => {
     expect(service).toBeTruthy();
 
     const obs = service.getResp();
@@ -18,5 +18,5 @@ describe('TestService', () => {
     const ret = await obs.toPromise();
 
     expect(ret).toBe('cacca');
-  });
+  })));
 });

@@ -6,7 +6,7 @@ import { TableColumn } from '@swimlane/ngx-datatable';
 import { ScontriniMockService } from '../services/scontrini-mock/scontrini-mock.service';
 
 @Component({
-  selector: 'app-scontrini-list',
+  selector: 'scontrini-list',
   templateUrl: './scontrini-list.component.html',
   styleUrls: ['./scontrini-list.component.scss']
 })

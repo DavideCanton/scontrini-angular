@@ -1,3 +1,4 @@
+import { AppRouterModule } from './app-router.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -7,7 +8,6 @@ import { ScontriniMockService } from './services/scontrini-mock/scontrini-mock.s
 import { IScontriniRetrieverConfigToken } from './services/interfaces/scontrini-retriever';
 import { BadgeComponent } from './badge/badge.component';
 import { ScontriniListComponent } from './scontrini-list/scontrini-list.component';
-import { AppRoutes } from './app.routes';
 import { RouterModule } from '@angular/router';
 import { TopbarComponent } from './topbar/topbar.component';
 
@@ -20,11 +20,9 @@ import { TopbarComponent } from './topbar/topbar.component';
     TopbarComponent
   ],
   imports: [
-    RouterModule.forRoot(
-      AppRoutes
-    ),
     NgxDatatableModule,
-    BrowserModule
+    BrowserModule,
+    AppRouterModule
   ],
   providers: [{ provide: IScontriniRetrieverConfigToken, useClass: ScontriniMockService }],
   bootstrap: [AppComponent]
