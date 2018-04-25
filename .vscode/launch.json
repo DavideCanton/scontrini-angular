@@ -8,7 +8,7 @@
             "address": "localhost",
             "port": 9333,
             "pathMapping": {
-                "/": "${workspaceRoot}",
+                "/": "${workspaceRoot}/",
                 "/base/": "${workspaceRoot}/"
             }
         }

@@ -5,30 +5,30 @@ import 'rxjs/add/observable/from';
 import { Scontrino } from '../../models/scontrino';
 import * as moment from 'moment';
 import '../../utils/json-mapper-rxext';
+import { range } from 'rxjs/observable/range';
+
 
 @Injectable()
 export class ScontriniMockService implements IScontriniRetriever {
   n = 2;
 
-  constructor() { }
+  private static mapScontrini(i: number) {
+    return {
+      id: i + 1,
+      importoDavide: i * 2 + 1,
+      importoMonia: i * 3 - 2,
+      descrizione: `Articolo ${i}`,
+      personale: i % 4 === 0,
+      data: moment().add(i, 'days').format('DD/MM/YYYY')
+    };
+  }
 
   retrieveScontrini(): Observable<Scontrino> {
     const scontrini = [];
 
-    for (let i = 0; i < this.n; ++i)
-     {
-      let s = <any> {};
-      s.id = i + 1;
-      s.importoDavide = i * 2 + 1;
-      s.importoMonia = i * 3 - 2;
-      s.descrizione = `Articolo ${i}`;
-      s.personale = i % 4 === 0;
-      s.data = moment().add(i, 'days').format('DD/MM/YYYY');
-
-      scontrini.push(s);
-    }
-
-    return Observable.from(scontrini).mapModel(Scontrino);
+    return range(0, this.n)
+      .map(ScontriniMockService.mapScontrini)
+      .mapModel(Scontrino);
   }
 
 }
