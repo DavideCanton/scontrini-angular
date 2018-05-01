@@ -3,9 +3,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ScontriniListComponent } from './scontrini-list.component';
 import { BadgeComponent } from '../badge/badge.component';
 import { ScontriniMockService } from '../services/scontrini-mock/scontrini-mock.service';
-import { IScontriniRetrieverConfigToken } from '../services/interfaces/scontrini-retriever';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { By } from '@angular/platform-browser';
+import { ScontriniRetriever } from '../services/interfaces/scontrini-retriever';
 
 describe('ScontriniListComponent', () => {
   let component: ScontriniListComponent;
@@ -13,13 +13,13 @@ describe('ScontriniListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ NgxDatatableModule ],
-      declarations: [ BadgeComponent, ScontriniListComponent ],
+      imports: [NgxDatatableModule],
+      declarations: [BadgeComponent, ScontriniListComponent],
       providers: [
-        { provide: IScontriniRetrieverConfigToken, useClass: ScontriniMockService }
+        { provide: ScontriniRetriever, useClass: ScontriniMockService }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

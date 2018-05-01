@@ -1,12 +1,10 @@
-import { TestBed, async } from '@angular/core/testing';
-import { AppComponent } from './app.component';
-import { IScontriniRetrieverConfigToken } from './services/interfaces/scontrini-retriever';
-import { ScontriniMockService } from './services/scontrini-mock/scontrini-mock.service';
-import { By } from '@angular/platform-browser';
-import { BadgeComponent } from './badge/badge.component';
 import { APP_BASE_HREF } from '@angular/common';
-import { TopbarComponent } from './topbar/topbar.component';
+import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { AppComponent } from './app.component';
+import { BadgeComponent } from './badge/badge.component';
+import { TopbarComponent } from './topbar/topbar.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -16,7 +14,10 @@ describe('AppComponent', () => {
         BadgeComponent,
         TopbarComponent
       ],
-      imports: [RouterTestingModule],
+      imports: [
+        RouterTestingModule,
+        HttpClientTestingModule
+      ],
       providers: [
         { provide: APP_BASE_HREF, useValue: '/' }
       ]

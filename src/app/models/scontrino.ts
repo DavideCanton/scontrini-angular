@@ -1,6 +1,6 @@
+import { JsonProperty } from 'at-json';
 import * as moment from 'moment';
 import { Utils } from '../utils/utils';
-import { JsonProperty } from 'at-json';
 
 export class Scontrino {
     @JsonProperty()
@@ -17,7 +17,7 @@ export class Scontrino {
     data: moment.Moment;
 
     constructor() {
-        this.id = undefined;
+        this.id = 0;
         this.importoDavide = undefined;
         this.importoMonia = undefined;
         this.descrizione = undefined;

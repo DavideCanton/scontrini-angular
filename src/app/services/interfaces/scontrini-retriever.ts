@@ -1,9 +1,9 @@
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Scontrino } from '../../models/scontrino';
 import { InjectionToken } from '@angular/core';
 
-export interface IScontriniRetriever {
-    retrieveScontrini(): Observable<Scontrino>;
-}
+export abstract class ScontriniRetriever {
+    abstract retrieveScontrini(): Observable<Scontrino[]>;
 
-export const IScontriniRetrieverConfigToken = new InjectionToken<IScontriniRetriever>('app.IScontriniRetriever');
+    abstract getScontrino(id: number): Observable<Scontrino | null>;
+}

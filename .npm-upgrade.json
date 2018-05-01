@@ -1,0 +1,8 @@
+{
+  "ignore": {
+    "typescript": {
+      "versions": "2.8.3",
+      "reason": "not compatible with angular"
+    }
+  }
+}

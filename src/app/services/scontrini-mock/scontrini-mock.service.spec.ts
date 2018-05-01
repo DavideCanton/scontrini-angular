@@ -1,6 +1,7 @@
 import { TestBed, inject } from '@angular/core/testing';
-import 'rxjs/add/operator/toArray';
+
 import { ScontriniMockService } from './scontrini-mock.service';
+import { toArray } from 'rxjs/operators';
 
 describe('ScontriniMockService', () => {
   beforeEach(() => {
@@ -18,7 +19,7 @@ describe('ScontriniMockService', () => {
 
     service.n = 5;
 
-    service.retrieveScontrini().toArray().subscribe(res => {
+    service.retrieveScontrini().pipe(toArray()).subscribe(res => {
       expect(res.length).toBe(5);
     });
   }));

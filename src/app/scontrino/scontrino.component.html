@@ -1,0 +1,17 @@
+<ng-container *ngIf="scontrino">
+    <p *ngIf="scontrino.id > 0">Scontrino con id {{ scontrino.id }}</p>
+    <p *ngIf="scontrino.id === 0">Scontrino nuovo</p>
+
+    <p>Importo Davide</p>
+    <input [(ngModel)]="scontrino.importoDavide" type="number">
+
+    <p>Importo Monia</p>
+    <input [(ngModel)]="scontrino.importoMonia" type="number">
+
+    <p>Personale</p>
+    <input [(ngModel)]="scontrino.personale" type="checkbox">
+</ng-container>
+
+<div>
+    <button [routerLink]="['/scontrini']">Torna alla lista</button>
+</div>

@@ -1,15 +1,16 @@
-import { AppRouterModule } from './app-router.module';
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { FormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { AppRouterModule } from './app-router.module';
 import { AppComponent } from './app.component';
-import { ScontriniMockService } from './services/scontrini-mock/scontrini-mock.service';
-import { IScontriniRetrieverConfigToken } from './services/interfaces/scontrini-retriever';
 import { BadgeComponent } from './badge/badge.component';
 import { ScontriniListComponent } from './scontrini-list/scontrini-list.component';
-import { RouterModule } from '@angular/router';
+import { ScontrinoComponent } from './scontrino/scontrino.component';
+import { ScontriniRetriever } from './services/interfaces/scontrini-retriever';
+import { ScontriniMockService } from './services/scontrini-mock/scontrini-mock.service';
 import { TopbarComponent } from './topbar/topbar.component';
+
 
 
 @NgModule({
@@ -17,14 +18,16 @@ import { TopbarComponent } from './topbar/topbar.component';
     AppComponent,
     BadgeComponent,
     ScontriniListComponent,
+    ScontrinoComponent,
     TopbarComponent
   ],
   imports: [
     NgxDatatableModule,
     BrowserModule,
+    FormsModule,
     AppRouterModule
   ],
-  providers: [{ provide: IScontriniRetrieverConfigToken, useClass: ScontriniMockService }],
+  providers: [{ provide: ScontriniRetriever, useClass: ScontriniMockService }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

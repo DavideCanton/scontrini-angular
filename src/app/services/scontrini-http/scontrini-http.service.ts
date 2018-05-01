@@ -1,16 +1,25 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Scontrino } from '../../models/scontrino';
-import { IScontriniRetriever } from '../interfaces/scontrini-retriever';
-import '../../utils/json-mapper-rxext';
-
+import { mapModel } from '../../utils/json-mapper-rxext';
+import { ScontriniRetriever } from '../interfaces/scontrini-retriever';
+import { toArray } from 'rxjs/operators';
 @Injectable()
-export class ScontriniHttpService implements IScontriniRetriever {
+export class ScontriniHttpService extends ScontriniRetriever {
 
-  constructor(private http: Http) { }
+  constructor(private http: HttpClient) {
+    super();
+  }
 
-  retrieveScontrini(): Observable<Scontrino> {
-    return this.http.get('/api/scontrini').mapModel(Scontrino);
+  retrieveScontrini(): Observable<Scontrino[]> {
+    return this.http.get('/api/scontrini').pipe(
+      mapModel(Scontrino),
+      toArray()
+    );
+  }
+
+  getScontrino(id: number): Observable<Scontrino> {
+    return null;
   }
 }

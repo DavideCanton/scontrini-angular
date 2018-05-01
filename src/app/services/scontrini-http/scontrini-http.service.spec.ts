@@ -1,12 +1,12 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed, inject } from '@angular/core/testing';
-
 import { ScontriniHttpService } from './scontrini-http.service';
-import { Http, HttpModule } from '@angular/http';
+
 
 describe('ScontriniHttpService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpModule],
+      imports: [HttpClientTestingModule],
       providers: [ScontriniHttpService]
     });
   });

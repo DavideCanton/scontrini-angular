@@ -1,9 +1,9 @@
-import { Component, OnInit, Inject, ViewChild, TemplateRef } from '@angular/core';
-import { IScontriniRetrieverConfigToken, IScontriniRetriever } from '../services/interfaces/scontrini-retriever';
+import { Component, OnInit, Inject, ViewChild, TemplateRef, NgZone } from '@angular/core';
+import { ScontriniRetriever } from '../services/interfaces/scontrini-retriever';
 import { Scontrino } from '../models/scontrino';
-import 'rxjs/add/operator/toArray';
+import { toArray } from 'rxjs/operators';
 import { TableColumn } from '@swimlane/ngx-datatable';
-import { ScontriniMockService } from '../services/scontrini-mock/scontrini-mock.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   templateUrl: './scontrini-list.component.html',
@@ -19,7 +19,7 @@ export class ScontriniListComponent implements OnInit {
   isPersonaleRow: TemplateRef<any>;
 
 
-  constructor(@Inject(IScontriniRetrieverConfigToken) private service: IScontriniRetriever) { }
+  constructor(private service: ScontriniRetriever, private router: Router, private zone: NgZone) { }
 
   ngOnInit() {
 
@@ -37,9 +37,16 @@ export class ScontriniListComponent implements OnInit {
   loadData() {
     this.loading = true;
 
-    this.service.retrieveScontrini().toArray().subscribe(res => {
+    this.service.retrieveScontrini().subscribe(res => {
       this.scontrini = res;
       this.loading = false;
+    });
+  }
+
+  onSelect(o: { selected: Scontrino[] }) {
+    this.zone.run(() => {
+      const id = o.selected[0].id;
+      this.router.navigate(['/scontrini', id]);
     });
   }
 }

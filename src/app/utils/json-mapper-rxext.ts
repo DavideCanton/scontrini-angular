@@ -1,15 +1,12 @@
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
+import { Observable, OperatorFunction } from 'rxjs';
+
 import { Constructable, JsonMapper } from 'at-json';
+import { map } from 'rxjs/operators';
 
-declare module 'rxjs/Observable' {
-    interface Observable<T> {
-        mapModel: <U> (ctor: Constructable<U>) => Observable<U>;
-    }
+export function mapModel<T, U>(ctor: Constructable<U>): OperatorFunction<T, U> {
+    return (source: Observable<T>) => {
+        return source.pipe(
+            map(v => JsonMapper.deserialize(ctor, v))
+        );
+    };
 }
-
-function mapModel<T, U>(this: Observable<T>, ctor: Constructable<U>): Observable<U> {
-    return this.map(v => JsonMapper.deserialize(ctor, v));
-}
-
-Observable.prototype.mapModel = mapModel;
