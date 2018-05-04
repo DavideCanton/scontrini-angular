@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import * as moment from 'moment';
-import { Observable, range, of as observableOf } from 'rxjs';
-import { concatAll, filter, map, take, tap, toArray, defaultIfEmpty } from 'rxjs/operators';
+import { Observable, range, of as observableOf, from as observableFrom } from 'rxjs';
+import { concatAll, filter, map, take, tap, toArray, defaultIfEmpty, switchMap, concatMap } from 'rxjs/operators';
 import { Scontrino } from '../../models/scontrino';
 import { mapModel } from '../../utils/json-mapper-rxext';
 import { ScontriniRetriever } from '../interfaces/scontrini-retriever';
+import { log } from '../../utils/aop';
 
 
 
@@ -24,8 +25,10 @@ export class ScontriniMockService extends ScontriniRetriever {
     };
   }
 
+  @log
   retrieveScontrini(): Observable<Scontrino[]> {
-    const scontrini = [];
+    if (this.scontrini)
+      return observableOf(this.scontrini);
 
     return range(0, this.n).pipe(
       map(ScontriniMockService.mapScontrini),
@@ -37,12 +40,11 @@ export class ScontriniMockService extends ScontriniRetriever {
       );
   }
 
+  @log
   getScontrino(id: number): Observable<Scontrino | null> {
 
-    const scontrini = this.scontrini ? observableOf(this.scontrini) : this.retrieveScontrini();
-
-    return scontrini.pipe(
-      concatAll(),
+    return this.retrieveScontrini().pipe(
+      concatMap(a => observableFrom(a)),
       filter(s => s.id === id),
       take(1),
       defaultIfEmpty(null)

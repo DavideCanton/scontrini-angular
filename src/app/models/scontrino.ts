@@ -1,7 +1,8 @@
-import { JsonProperty } from 'at-json';
+import { JsonProperty, JsonClass, SerializeFn } from 'at-json';
 import * as moment from 'moment';
 import { Utils } from '../utils/utils';
 
+@JsonClass
 export class Scontrino {
     @JsonProperty()
     id: number;
@@ -18,11 +19,11 @@ export class Scontrino {
 
     constructor() {
         this.id = 0;
-        this.importoDavide = undefined;
-        this.importoMonia = undefined;
-        this.descrizione = undefined;
-        this.personale = undefined;
-        this.data = undefined;
+        this.importoDavide = null;
+        this.importoMonia = null;
+        this.descrizione = null;
+        this.personale = null;
+        this.data = null;
     }
 
     get dateString(): string {
@@ -31,4 +32,6 @@ export class Scontrino {
 
         return Utils.formatDate(this.data);
     }
+
+    serialize: SerializeFn;
 }
