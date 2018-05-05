@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
 
-@Component({
-    template: ''
-})
+@Component({ template: '' })
 export class BlankComponent { }

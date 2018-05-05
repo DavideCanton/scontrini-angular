@@ -14,7 +14,6 @@ describe('ScontrinoComponent', () => {
   let component: ScontrinoComponent;
   let fixture: ComponentFixture<ScontrinoComponent>;
   const activatedRoute = new ActivatedRouteStub();
-  let expectedId = 0;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
