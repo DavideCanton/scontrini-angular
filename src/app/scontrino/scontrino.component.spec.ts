@@ -9,6 +9,7 @@ import { ScontriniMockService } from '../services/scontrini-mock/scontrini-mock.
 import { ActivatedRoute } from '@angular/router';
 import { ActivatedRouteStub } from '../test-utils/activated-route-stub';
 import { tick } from '@angular/core/testing';
+import { CommonTestUtilsModule } from '../test-utils/common-test-utils.module';
 
 describe('ScontrinoComponent', () => {
   let component: ScontrinoComponent;

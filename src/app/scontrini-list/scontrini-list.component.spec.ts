@@ -9,6 +9,7 @@ import { BadgeComponent } from '../badge/badge.component';
 import { ScontriniRetriever } from '../services/interfaces/scontrini-retriever';
 import { ScontriniMockService } from '../services/scontrini-mock/scontrini-mock.service';
 import { BlankComponent } from '../test-utils/blank.component';
+import { CommonTestUtilsModule } from '../test-utils/common-test-utils.module';
 import { ScontriniListComponent } from './scontrini-list.component';
 
 
@@ -26,12 +27,12 @@ describe('ScontriniListComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         NgxDatatableModule,
+        CommonTestUtilsModule,
         RouterTestingModule.withRoutes(routes)
       ],
       declarations: [
         BadgeComponent,
-        ScontriniListComponent,
-        BlankComponent
+        ScontriniListComponent
       ],
       providers: [
         { provide: ScontriniRetriever, useClass: ScontriniMockService }
