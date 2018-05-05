@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { AppRouterModule } from './app-router.module';
@@ -10,6 +10,7 @@ import { ScontrinoComponent } from './scontrino/scontrino.component';
 import { ScontriniRetriever } from './services/interfaces/scontrini-retriever';
 import { ScontriniMockService } from './services/scontrini-mock/scontrini-mock.service';
 import { TopbarComponent } from './topbar/topbar.component';
+import { KeysPipe } from './pipes/keys.pipe';
 
 
 
@@ -19,12 +20,13 @@ import { TopbarComponent } from './topbar/topbar.component';
     BadgeComponent,
     ScontriniListComponent,
     ScontrinoComponent,
-    TopbarComponent
+    TopbarComponent,
+    KeysPipe
   ],
   imports: [
     NgxDatatableModule,
     BrowserModule,
-    FormsModule,
+    ReactiveFormsModule,
     AppRouterModule
   ],
   providers: [{ provide: ScontriniRetriever, useClass: ScontriniMockService }],

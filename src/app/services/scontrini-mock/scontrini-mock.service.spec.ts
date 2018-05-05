@@ -19,7 +19,7 @@ describe('ScontriniMockService', () => {
 
     service.n = 5;
 
-    service.retrieveScontrini().pipe(toArray()).subscribe(res => {
+    service.retrieveScontrini().subscribe(res => {
       expect(res.length).toBe(5);
     });
   }));

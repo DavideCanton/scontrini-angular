@@ -1,17 +1,25 @@
-<ng-container *ngIf="scontrino">
+<form *ngIf="scontrino" [formGroup]="group" (submit)="onSubmit()">
     <p *ngIf="scontrino.id > 0">Scontrino con id {{ scontrino.id }}</p>
     <p *ngIf="scontrino.id === 0">Scontrino nuovo</p>
 
     <p>Importo Davide</p>
-    <input [(ngModel)]="scontrino.importoDavide" type="number">
+    <input formControlName="importoDavide" type="number">
 
     <p>Importo Monia</p>
-    <input [(ngModel)]="scontrino.importoMonia" type="number">
+    <input formControlName="importoMonia" type="number">
 
     <p>Personale</p>
-    <input [(ngModel)]="scontrino.personale" type="checkbox">
-</ng-container>
-
-<div>
-    <button [routerLink]="['/scontrini']">Torna alla lista</button>
-</div>
+    <input formControlName="personale" type="checkbox">
+    
+    <div *ngIf="group.invalid">
+        <p>Errors: </p>
+        <ul *ngFor="let err of group.errors | keys">
+            <li>{{ err.value | json }}</li>
+        </ul>
+    </div>
+    
+    <div>
+        <button [disabled]="group.invalid" type="submit">Salva</button>
+        <button [routerLink]="['/scontrini']">Torna alla lista</button>
+    </div>
+</form>

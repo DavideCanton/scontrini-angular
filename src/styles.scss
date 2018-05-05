@@ -33,3 +33,7 @@ body {
 .text-danger {
     color: $dangerColor;
 }
+
+input.invalid {
+    border: 1px solid $dangerColor;
+}

@@ -2,8 +2,9 @@ import { Component, OnInit, Inject, ViewChild, TemplateRef, NgZone } from '@angu
 import { ScontriniRetriever } from '../services/interfaces/scontrini-retriever';
 import { Scontrino } from '../models/scontrino';
 import { toArray } from 'rxjs/operators';
-import { TableColumn } from '@swimlane/ngx-datatable';
+import { TableColumn, DatatableComponent } from '@swimlane/ngx-datatable';
 import { Router, ActivatedRoute } from '@angular/router';
+import { componentFactoryName } from '@angular/compiler';
 
 @Component({
   templateUrl: './scontrini-list.component.html',
@@ -18,6 +19,8 @@ export class ScontriniListComponent implements OnInit {
   @ViewChild('isPersonaleRow')
   isPersonaleRow: TemplateRef<any>;
 
+  @ViewChild(DatatableComponent)
+  datatable: DatatableComponent;
 
   constructor(private service: ScontriniRetriever, private router: Router, private zone: NgZone) { }
 
@@ -41,6 +44,11 @@ export class ScontriniListComponent implements OnInit {
       this.scontrini = res;
       this.loading = false;
     });
+  }
+
+  select(scontrino: Scontrino) {
+    this.datatable.selected = [scontrino];
+    this.onSelect({ selected: this.datatable.selected });
   }
 
   onSelect(o: { selected: Scontrino[] }) {
