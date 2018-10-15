@@ -23,10 +23,13 @@
             "styles": [
               "src/styles.scss",
               "src/assets/css/fontawesome.scss",
-              "src/assets/css/fa-solid.scss"
+              "src/assets/css/fa-solid.scss",
+              "node_modules/bootstrap/scss/bootstrap.scss",
+              "node_modules/ngx-bootstrap/datepicker/bs-datepicker.css"
             ],
             "scripts": [
-              "node_modules/moment/min/moment.min.js"
+              "node_modules/moment/min/moment.min.js",
+              "src/assets/js/glfx.js"
             ]
           },
           "configurations": {

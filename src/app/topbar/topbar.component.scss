@@ -1,5 +1,4 @@
 @import '~variables.scss';
-
 .topbar {
     position: fixed;
     width: 100%;
@@ -10,14 +9,20 @@
     -webkit-box-shadow: 0px 2px 1px #dddddd;
     box-shadow: 0px 2px 1px #dddddd;
     font-size: 18px;
-    padding-left: $standardPadding;
+    padding: 0 $standardPadding;
     z-index: 100;
     height: $topbarHeight;
-
+    display: flex;
+    align-items: center;
     .title {
-        position: relative;
-        top: 50%;
-        transform: translateY(-50%);
-        display: inline-block;        
+        flex: 0;
+        white-space: nowrap;
+    }
+    .loading {
+        flex: 1;
+        text-align: center;
+    }
+    .btn {
+        flex: 0;
     }
 }

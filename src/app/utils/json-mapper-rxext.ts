@@ -10,3 +10,12 @@ export function mapModel<T, U>(ctor: Constructable<U>): OperatorFunction<T, U> {
         );
     };
 }
+
+export function mapModelArray<T, U>(ctor: Constructable<U>): OperatorFunction<T[], U[]> {
+    return (source: Observable<T[]>) => {
+        return source.pipe(
+            map(v => JsonMapper.deserializeArray(ctor, v))
+        );
+    };
+}
+

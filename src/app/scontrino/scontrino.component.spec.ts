@@ -1,15 +1,13 @@
-import { async, ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
-
-import { ScontrinoComponent } from './scontrino.component';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
-import { KeysPipe } from '../pipes/keys.pipe';
-import { RouterTestingModule } from '@angular/router/testing';
-import { ScontriniRetriever } from '../services/interfaces/scontrini-retriever';
-import { ScontriniMockService } from '../services/scontrini-mock/scontrini-mock.service';
 import { ActivatedRoute } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
+
+import { KeysPipe } from '../pipes/keys.pipe';
+import { SCONTRINI_SERVICE_TOKEN } from '../services/interfaces/scontrini-retriever';
+import { ScontriniMockService } from '../services/scontrini-mock/scontrini-mock.service';
 import { ActivatedRouteStub } from '../test-utils/activated-route-stub';
-import { tick } from '@angular/core/testing';
-import { CommonTestUtilsModule } from '../test-utils/common-test-utils.module';
+import { ScontrinoComponent } from './scontrino.component';
 
 describe('ScontrinoComponent', () => {
   let component: ScontrinoComponent;
@@ -27,7 +25,7 @@ describe('ScontrinoComponent', () => {
         RouterTestingModule
       ],
       providers: [
-        { provide: ScontriniRetriever, useClass: ScontriniMockService },
+        { provide: SCONTRINI_SERVICE_TOKEN, useClass: ScontriniMockService },
         { provide: ActivatedRoute, useValue: activatedRoute }
 
       ]
@@ -47,7 +45,7 @@ describe('ScontrinoComponent', () => {
 
     tick();
 
-    expect(component.scontrino.id).toBe(1);
+    expect(component.id$.getValue()).toBe(1);
   }));
 
   it('should create with a new scontrino if id is invalid', fakeAsync(() => {
@@ -56,7 +54,7 @@ describe('ScontrinoComponent', () => {
 
     tick();
 
-    expect(component.scontrino.id).toBe(0);
+    expect(component.id$.getValue()).toBe(0);
   }));
 
   it('should create with a new scontrino if id is not present', fakeAsync(() => {
@@ -64,6 +62,6 @@ describe('ScontrinoComponent', () => {
 
     tick();
 
-    expect(component.scontrino.id).toBe(0);
+    expect(component.id$.getValue()).toBe(0);
   }));
 });

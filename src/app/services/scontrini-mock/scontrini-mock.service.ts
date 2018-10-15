@@ -1,53 +1,39 @@
 import { Injectable } from '@angular/core';
 import * as moment from 'moment';
-import { Observable, range, of as observableOf, from as observableFrom } from 'rxjs';
-import { concatAll, filter, map, take, tap, toArray, defaultIfEmpty, switchMap, concatMap } from 'rxjs/operators';
+import { Observable, of, range } from 'rxjs';
+import { delay, map, toArray } from 'rxjs/operators';
+
 import { Scontrino } from '../../models/scontrino';
 import { mapModel } from '../../utils/json-mapper-rxext';
-import { ScontriniRetriever } from '../interfaces/scontrini-retriever';
-import { log } from '../../utils/aop';
+import { IScontriniRetriever } from '../interfaces/scontrini-retriever';
 
 
 
 @Injectable()
-export class ScontriniMockService extends ScontriniRetriever {
-  n = 100;
-  scontrini: Scontrino[];
+export class ScontriniMockService implements IScontriniRetriever {
+  n = 10;
 
   private static mapScontrini(i: number) {
     return {
       id: i + 1,
-      importoDavide: i * 2 + 1,
-      importoMonia: i * 3 - 2,
+      importoDavide: i * 200 + 50,
+      importoMonia: i * 300 - 26,
       descrizione: `Articolo ${i}`,
       personale: i % 4 === 0,
       data: moment().add(i, 'days').format('DD/MM/YYYY')
     };
   }
 
-  @log
   retrieveScontrini(): Observable<Scontrino[]> {
-    if (this.scontrini)
-      return observableOf(this.scontrini);
-
     return range(0, this.n).pipe(
       map(ScontriniMockService.mapScontrini),
-      mapModel(Scontrino)
-    )
-      .pipe(
-        toArray(),
-        tap(s => this.scontrini = s)
-      );
+      mapModel(Scontrino),
+      delay(1000),
+      toArray()
+    );
   }
 
-  @log
-  getScontrino(id: number): Observable<Scontrino | null> {
-
-    return this.retrieveScontrini().pipe(
-      concatMap(a => observableFrom(a)),
-      filter(s => s.id === id),
-      take(1),
-      defaultIfEmpty(null)
-    );
+  save(s: Scontrino): Observable<boolean> {
+    return of(true);
   }
 }

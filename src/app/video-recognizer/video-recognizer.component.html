@@ -1,0 +1,73 @@
+<div class="row">
+  <div class="video-container col-12">
+    <video [hidden]="true" autoplay="true" #video [attr.width]="canvasWidth" [attr.height]="canvasHeight"></video>
+    <div #canvasContainer class="canvas-container position-relative">
+      <canvas #shownCanvas [attr.width]="canvasWidth" [attr.height]="canvasHeight" [hidden]="notCaptured"></canvas>
+      <div class="canvas-overlay position-absolute" [hidden]="notCaptured">
+        <div *ngFor="let rect of rects" [tooltip]="rect.word" triggers="click" class="position-absolute word-tooltip"
+          [style.top.px]="rect.y" [style.left.px]="rect.x" [style.width.px]="rect.w" [style.height.px]="rect.h">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12 form-container">
+    <div class="row">
+      <button (click)="capture()" type="button" class="btn btn-primary col-12" [hidden]="!notCaptured">Capture!</button>
+      <button (click)="reset()" type="button" class="btn btn-danger col-12" [hidden]="notCaptured">Reset</button>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12 form-container" [hidden]="!notCaptured">
+    <div class="row">
+      <label class="col-3">Brightness</label>
+      <input class="col-8" type="range" min="-1" max="1" step="0.01" [(ngModel)]="brightness">
+    </div>
+    <div class="row">
+      <label class="col-3">Contrast</label>
+      <input class="col-8" type="range" min="-1" max="0.99" step="0.01" [(ngModel)]="contrast">
+    </div>
+    <div class="row">
+      <label class="col-3">Denoise</label>
+      <div class="col-2"><button class="btn" type="button" [class.btn-success]="applyDenoise" [class.btn-danger]="!applyDenoise"
+          (click)="applyDenoise = !applyDenoise">
+          <span class="fas" [class.fa-check]="applyDenoise" [class.fa-times]="!applyDenoise"></span>
+        </button>
+      </div>
+      <input class="col-6" type="range" min="0" max="100" step="1" [(ngModel)]="denoise">
+    </div>
+    <div class="row">
+      <label class="col-3">Unsharp radius</label>
+      <div class="col-2">
+        <button class="btn" type="button" [class.btn-success]="applyUnsharp" [class.btn-danger]="!applyUnsharp" (click)="applyUnsharp = !applyUnsharp">
+          <span class="fas" [class.fa-check]="applyUnsharp" [class.fa-times]="!applyUnsharp"></span>
+        </button>
+      </div>
+      <input class="col-6" type="range" min="0" max="200" step="1" [(ngModel)]="unsharpRadius">
+    </div>
+    <div class="row">
+      <label class="col-3">Unsharp strength</label>
+      <input class="col-8" type="range" min="0" max="5" step="1" [(ngModel)]="unsharpStrength">
+    </div>
+  </div>
+</div>
+<div class="row" [hidden]="notCaptured">
+  <div class="col-6">
+      <div class="row confidence-row" *ngFor="let rect of rects; let i = index" (click)="showTooltip(i)">
+          <div class="col-6">{{ rect.word }}</div>
+          <div class="col-6">{{ rect.confidence | number:'1.0-2' }} </div>
+        </div>
+  </div>
+  <ul class="col-6">
+    <div class="row" *ngFor="let message of messages">
+      <div class="col-6">{{ message.status }}</div>
+      <div class="col-6">
+        <progressbar max="100" [value]="message.progress" type="success" [animate]="true">
+          {{ message.progress }}%
+        </progressbar>
+      </div>
+    </div>
+  </ul>
+</div>

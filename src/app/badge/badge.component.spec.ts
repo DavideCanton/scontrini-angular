@@ -36,14 +36,14 @@ describe('BadgeComponent', () => {
 
   it('should have info class', () => {
     component.value = '3';
-    component.type = 'info';
+    component.type = BadgeType.Info;
     fixture.detectChanges();
 
     const element = fixture.debugElement.query(By.css('span.badge'));
     const nativeElement: HTMLSpanElement = element.nativeElement;
 
     expect(nativeElement.classList).toContain('info');
-    expect(component.enumType).toBe(BadgeType.Info);
+    expect(component.type).toBe(BadgeType.Info);
     expect(nativeElement.textContent).toBe('3');
   });
 
@@ -55,42 +55,34 @@ describe('BadgeComponent', () => {
     const nativeElement: HTMLSpanElement = element.nativeElement;
 
     expect(nativeElement.classList).toContain('info');
-    expect(component.enumType).toBe(BadgeType.Info);
+    expect(component.type).toBe(BadgeType.Info);
     expect(nativeElement.textContent).toBe('3');
   });
 
   it('should have warning class', () => {
     component.value = '3';
-    component.type = 'warning';
+    component.type = BadgeType.Warning;
     fixture.detectChanges();
 
     const element = fixture.debugElement.query(By.css('span.badge'));
     const nativeElement: HTMLSpanElement = element.nativeElement;
 
     expect(nativeElement.classList).toContain('warning');
-    expect(component.enumType).toBe(BadgeType.Warning);
+    expect(component.type).toBe(BadgeType.Warning);
     expect(nativeElement.textContent).toBe('3');
   });
 
 
   it('should have error class', () => {
     component.value = '3';
-    component.type = 'error';
+    component.type = BadgeType.Error;
     fixture.detectChanges();
 
     const element = fixture.debugElement.query(By.css('span.badge'));
     const nativeElement: HTMLSpanElement = element.nativeElement;
 
     expect(nativeElement.classList).toContain('error');
-    expect(component.enumType).toBe(BadgeType.Error);
+    expect(component.type).toBe(BadgeType.Error);
     expect(nativeElement.textContent).toBe('3');
-  });
-
-  it('should throw with invalid type', () => {
-    expect(function () {
-      component.value = '3';
-      component.type = 'invalid';
-      fixture.detectChanges();
-    }).toThrow(new Error('Invalid value invalid'));
   });
 });

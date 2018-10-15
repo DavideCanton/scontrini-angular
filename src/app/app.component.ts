@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { BsLocaleService } from 'ngx-bootstrap';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,8 @@ export class AppComponent {
 
   title = 'app';
 
-  constructor() {
-
+  constructor(localeService: BsLocaleService) {
+    localeService.use('it');
   }
+
 }

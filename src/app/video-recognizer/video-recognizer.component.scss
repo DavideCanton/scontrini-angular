@@ -1,0 +1,36 @@
+$w: 640px;
+$h: 480px;
+ul {
+    li {
+        font-size: 12pt;
+    }
+}
+
+.video-container {
+    display: flex;
+    margin-bottom: 10px;
+    .canvas-container {
+        width: $w;
+        height: $h;
+        canvas {
+            width: $w;
+            height: $h;
+        }
+        .canvas-overlay {
+            width: $w;
+            height: $h;
+            right: 0;
+            top: 0;
+        }
+    }
+}
+
+.confidence-row {
+    cursor: pointer;
+}
+
+.form-container {
+    .row {
+        margin-bottom: 5px;
+    }
+}

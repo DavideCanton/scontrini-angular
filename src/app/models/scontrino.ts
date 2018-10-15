@@ -1,6 +1,7 @@
 import { JsonProperty, JsonClass, SerializeFn } from 'at-json';
 import * as moment from 'moment';
 import { Utils } from '../utils/utils';
+import { JsonDate } from './common';
 
 @JsonClass
 export class Scontrino {
@@ -14,7 +15,7 @@ export class Scontrino {
     descrizione: string;
     @JsonProperty()
     personale: boolean;
-    @JsonProperty(Utils.parseDate)
+    @JsonDate()
     data: moment.Moment;
 
     constructor() {
@@ -30,7 +31,7 @@ export class Scontrino {
         if (!this.data)
             return '';
 
-        return Utils.formatDate(this.data);
+        return Utils.formatDateForShow(this.data);
     }
 
     serialize: SerializeFn;

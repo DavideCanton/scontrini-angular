@@ -1,12 +1,22 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+
 import { ScontriniListComponent } from './scontrini-list/scontrini-list.component';
 import { ScontrinoComponent } from './scontrino/scontrino.component';
+import { ScontriniResolver } from './services/scontrini.resolver';
 
 const appRoutes: Routes = [
     {
-        path: 'scontrini', children: [
-            { path: ':id', component: ScontrinoComponent },
+        path: 'scontrini',
+        resolve: {
+            scontrini: ScontriniResolver
+        },
+        runGuardsAndResolvers: 'always',
+        children: [
+            {
+                path: ':id',
+                component: ScontrinoComponent,
+            },
             { path: '', component: ScontriniListComponent },
         ]
     },
@@ -17,9 +27,10 @@ const appRoutes: Routes = [
 @NgModule({
     imports: [
         RouterModule.forRoot(appRoutes,
-        {
-            // enableTracing: true
-        })
+            {
+                onSameUrlNavigation: 'reload'
+                // enableTracing: true
+            })
     ],
     exports: [RouterModule]
 })

@@ -1,25 +1,57 @@
-<form *ngIf="scontrino" [formGroup]="group" (submit)="onSubmit()">
-    <p *ngIf="scontrino.id > 0">Scontrino con id {{ scontrino.id }}</p>
-    <p *ngIf="scontrino.id === 0">Scontrino nuovo</p>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3 col-12">
+            <form [formGroup]="facade.group" (submit)="onSubmit()">
+                <p *ngIf="(id$ | async) > 0">Scontrino con id {{ id$ | async }}</p>
+                <p *ngIf="(id$ | async) === 0">Scontrino nuovo</p>
 
-    <p>Importo Davide</p>
-    <input formControlName="importoDavide" type="number">
+                <div class="form-group">
+                    <label>Importo Davide</label>
+                    <input class="form-control" formControlName="importoDavide" type="number">
+                </div>
 
-    <p>Importo Monia</p>
-    <input formControlName="importoMonia" type="number">
+                <div class="form-group">
+                    <label>Importo Monia</label>
+                    <input class="form-control" formControlName="importoMonia" type="number">
+                </div>
 
-    <p>Personale</p>
-    <input formControlName="personale" type="checkbox">
-    
-    <div *ngIf="group.invalid">
-        <p>Errors: </p>
-        <ul *ngFor="let err of group.errors | keys">
-            <li>{{ err.value | json }}</li>
-        </ul>
+                <div class="form-group">
+                    <label>Personale</label>
+                    <input class="form-control" formControlName="personale" type="checkbox">
+                </div>
+
+                <div class="form-group">
+                    <label>Data</label>
+                    <input class="form-control" formControlName="data" bsDatepicker>
+                </div>
+
+                <div class="form-group">
+                    <label>Descrizione</label>
+                    <textarea class="form-control" formControlName="descrizione" rows="3"></textarea>
+                </div>
+
+                <div *ngIf="!facade.valid">
+                    <label>Errori: </label>
+                    <ul *ngFor="let err of facade.errors | keys">
+                        <li>{{ err.value | json }}</li>
+                    </ul>
+                </div>
+
+                <div class="row">
+                    <button [disabled]="!facade.valid" type="submit" class="btn btn-success col-4 offset-1">Salva</button>
+                    <button [routerLink]="['/scontrini']" type="button" class="btn btn-danger col-4 offset-2">Torna alla lista</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-6 col-12">
+            <div class="spacer d-block d-lg-none"></div>
+            <button type="button" class="btn btn-primary" (click)="isCollapsed = !isCollapsed">
+                {{ isCollapsed ? 'Apri' : 'Chiudi' }}
+            </button>
+            <div [collapse]="isCollapsed">
+                <hr>
+                <app-video-recognizer></app-video-recognizer>
+            </div>
+        </div>
     </div>
-    
-    <div>
-        <button [disabled]="group.invalid" type="submit">Salva</button>
-        <button [routerLink]="['/scontrini']">Torna alla lista</button>
-    </div>
-</form>
+</div>

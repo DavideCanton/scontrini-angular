@@ -1,9 +1,10 @@
 <div class="scontrini-list-container">
-    <ngx-datatable class="material" [loadingIndicator]="loading" [trackByProp]="'id'" [columnMode]="'force'" [rows]="scontrini"
-        [rowHeight]="50" [headerHeight]="50" [columns]="columns" [scrollbarV]="true" [selectionType]="'single'" (select)='onSelect($event)'>
+    <ngx-datatable class="material" [loadingIndicator]="loading" trackByProp="id" columnMode="force" [rows]="scontrini"
+        [rowHeight]="50" [headerHeight]="50" [columns]="columns" [scrollbarV]="true" selectionType="single" (select)='onSelect($event)'>
     </ngx-datatable>
 
     <ng-template let-row="row" #isPersonaleRow let-value="value">
-        <span class="fas" [class.fa-check]="value" [class.text-ok]="value" [class.fa-times]="!value" [class.text-danger]="!value"></span>
+        <span class="fas" [class.fa-check]="value" [class.text-ok]="value" [class.fa-times]="!value"
+            [class.text-danger]="!value"></span>
     </ng-template>
 </div>

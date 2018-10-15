@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
+
 
 @Component({
   selector: 'topbar',
@@ -10,5 +11,5 @@ export class TopbarComponent {
   @Input()
   content: string;
 
-  constructor() { }
+
 }

@@ -1,6 +1,5 @@
 import { convertToParamMap, ParamMap, Params } from '@angular/router';
 import { ReplaySubject } from 'rxjs';
-import { Injectable } from '@angular/core';
 
 /**
  * An ActivateRoute test double with a `paramMap` observable.
