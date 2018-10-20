@@ -87,7 +87,7 @@ export class FormGroupFacade<T> {
   }
 
   getControl<K extends keyof T>(key: K): AbstractControl {
-    return this._group.get(key)!;
+    return this._group.get(<string>key)!;
   }
 
   getValue<K extends keyof T>(key: K): T[K] {
