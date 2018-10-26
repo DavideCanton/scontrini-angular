@@ -3,7 +3,7 @@ import * as moment from 'moment';
 import { Utils } from '../utils/utils';
 import { JsonDate } from './common';
 
-@JsonClass
+@JsonClass()
 export class Scontrino {
     @JsonProperty()
     id: number;
