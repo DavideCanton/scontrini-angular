@@ -1,11 +1,11 @@
 import { Component, NgZone, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { DatatableComponent, TableColumn } from '@swimlane/ngx-datatable';
-import { Observable } from 'rxjs';
 import * as moment from 'moment';
-import { Scontrino } from '../models/scontrino';
-import { Utils } from '../utils/utils';
-import { ScontriniStoreService } from '../services/scontrini-store';
+
+import { Scontrino } from '../../models/scontrino';
+import { ScontriniStoreService } from '../../services/scontrini-store';
+import { Utils } from '../../utils/utils';
 
 @Component({
   templateUrl: './scontrini-list.component.html',

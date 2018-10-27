@@ -1,5 +1,5 @@
+import { Utils } from 'app/utils/utils';
 import { makeCustomDecorator } from 'at-json';
-import { Utils } from '../utils/utils';
 
 export const JsonDate = makeCustomDecorator(
     Utils.formatDate,

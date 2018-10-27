@@ -1,10 +1,7 @@
-import { AfterViewInit, Component, ElementRef, QueryList, ViewChild, ViewChildren, ViewEncapsulation, OnDestroy } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, QueryList, ViewChild, ViewChildren, ViewEncapsulation } from '@angular/core';
+import { TesseractProviderService } from 'app/services/tesseract-provider/tesseract-provider.service';
 import { TooltipDirective } from 'ngx-bootstrap/tooltip';
 import * as Tesseract from 'tesseract.js';
-
-import { TesseractProviderService } from '../services/tesseract-provider/tesseract-provider.service';
-
-declare var fx: any;
 
 export interface IRect {
   x: number;
@@ -43,8 +40,8 @@ export class VideoRecognizerComponent implements AfterViewInit, OnDestroy {
   @ViewChildren(TooltipDirective)
   tooltips: QueryList<TooltipDirective>;
 
-  videoCanvas: any;
-  texture: any;
+  videoCanvas: fx.FxCanvas;
+  texture: fx.FxTexture;
   rafHandle: number;
 
   messages: IMessage[];
@@ -140,7 +137,7 @@ export class VideoRecognizerComponent implements AfterViewInit, OnDestroy {
   }
 
   onError(err) {
-    console.log('An error occured! ' + err);
+    console.log(`An error occured! ${err}`);
   }
 
   updateMessages(message: IMessage) {
@@ -194,7 +191,7 @@ export class VideoRecognizerComponent implements AfterViewInit, OnDestroy {
       return;
     }
 
-    const srcCanvas = <HTMLCanvasElement>this.videoCanvas;
+    const srcCanvas = this.videoCanvas;
 
     vctx.drawImage(srcCanvas, 0, 0, srcCanvas.width, srcCanvas.height);
 

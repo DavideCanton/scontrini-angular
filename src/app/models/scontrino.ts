@@ -1,7 +1,7 @@
-import { JsonProperty, JsonClass, SerializeFn } from 'at-json';
+import { JsonDate } from 'app/models/common';
+import { Utils } from 'app/utils/utils';
+import { JsonClass, JsonProperty, SerializeFn } from 'at-json';
 import * as moment from 'moment';
-import { Utils } from '../utils/utils';
-import { JsonDate } from './common';
 
 @JsonClass()
 export class Scontrino {

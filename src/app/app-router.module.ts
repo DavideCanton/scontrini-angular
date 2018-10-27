@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ScontriniListComponent } from 'app/components/scontrini-list/scontrini-list.component';
+import { ScontrinoComponent } from 'app/components/scontrino/scontrino.component';
+import { ScontriniResolver } from 'app/services/scontrini.resolver';
 
-import { ScontriniListComponent } from './scontrini-list/scontrini-list.component';
-import { ScontrinoComponent } from './scontrino/scontrino.component';
-import { ScontriniResolver } from './services/scontrini.resolver';
 
 const appRoutes: Routes = [
     {

@@ -4,23 +4,23 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { AppRouterModule } from 'app/app-router.module';
+import { AppComponent } from 'app/app.component';
+import { BadgeComponent } from 'app/components/badge/badge.component';
+import { ScontriniListComponent } from 'app/components/scontrini-list/scontrini-list.component';
+import { ScontrinoComponent } from 'app/components/scontrino/scontrino.component';
+import { TopbarComponent } from 'app/components/topbar/topbar.component';
+import { VideoRecognizerComponent } from 'app/components/video-recognizer/video-recognizer.component';
+import { KeysPipe } from 'app/pipes/keys.pipe';
+import { UnsafeHtmlPipe } from 'app/pipes/unsafe-html.pipe';
+import { SCONTRINI_SERVICE_TOKEN } from 'app/services/interfaces/scontrini-retriever';
+import { ScontriniHttpService } from 'app/services/scontrini-http/scontrini-http.service';
+import { ScontriniResolver } from 'app/services/scontrini.resolver';
+import { TesseractProviderService } from 'app/services/tesseract-provider/tesseract-provider.service';
 import { BsDatepickerConfig, BsDatepickerModule, CollapseModule, ProgressbarModule, TooltipModule } from 'ngx-bootstrap';
 import { defineLocale } from 'ngx-bootstrap/chronos';
 import { itLocale } from 'ngx-bootstrap/locale';
 
-import { AppRouterModule } from './app-router.module';
-import { AppComponent } from './app.component';
-import { BadgeComponent } from './badge/badge.component';
-import { KeysPipe } from './pipes/keys.pipe';
-import { UnsafeHtmlPipe } from './pipes/unsafe-html.pipe';
-import { ScontriniListComponent } from './scontrini-list/scontrini-list.component';
-import { ScontrinoComponent } from './scontrino/scontrino.component';
-import { SCONTRINI_SERVICE_TOKEN } from './services/interfaces/scontrini-retriever';
-import { ScontriniHttpService } from './services/scontrini-http/scontrini-http.service';
-import { ScontriniResolver } from './services/scontrini.resolver';
-import { TesseractProviderService } from './services/tesseract-provider/tesseract-provider.service';
-import { TopbarComponent } from './topbar/topbar.component';
-import { VideoRecognizerComponent } from './video-recognizer/video-recognizer.component';
 
 defineLocale('it', itLocale);
 
