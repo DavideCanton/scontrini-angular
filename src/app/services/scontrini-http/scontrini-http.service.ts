@@ -1,13 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Scontrino } from 'app/models/scontrino';
+import { IScontriniRetriever } from 'app/services/interfaces/scontrini-retriever';
+import { mapModelArray } from 'app/utils/json-mapper-rxext';
 import { Observable } from 'rxjs';
 import { map, mapTo } from 'rxjs/operators';
 
-import { Scontrino } from '../../models/scontrino';
-import { mapModelArray } from '../../utils/json-mapper-rxext';
-import { IScontriniRetriever } from '../interfaces/scontrini-retriever';
-
-const URL = 'http://localhost:5000/scontrini';
+const URL = 'http://localhost:5000';
+const URL_SCONTRINI = `${URL}/scontrini`;
+const URL_DESC = `${URL}/descriptions`;
 
 @Injectable()
 export class ScontriniHttpService implements IScontriniRetriever {
@@ -16,7 +17,7 @@ export class ScontriniHttpService implements IScontriniRetriever {
   }
 
   retrieveScontrini(): Observable<Scontrino[]> {
-    return this.http.get<{ results: any[] }>(URL).pipe(
+    return this.http.get<{ results: any[] }>(URL_SCONTRINI).pipe(
       map(r => r.results),
       mapModelArray(Scontrino)
     );
@@ -28,14 +29,19 @@ export class ScontriniHttpService implements IScontriniRetriever {
     };
 
     if (s.id === 0) {
-      return this.http.post(URL, s.serialize(), { headers }).pipe(
+      return this.http.post(URL_SCONTRINI, s.serialize(), { headers }).pipe(
         mapTo(true)
       );
     }
     else {
-      return this.http.put(URL, s.serialize(), { headers }).pipe(
+      return this.http.put(URL_SCONTRINI, s.serialize(), { headers }).pipe(
         mapTo(true)
       );
     }
+  }
+
+  getDescriptions(text: string): Observable<string[]> {
+    const url = `${URL_DESC}/${text}`;
+    return this.http.get<string[]>(url);
   }
 }

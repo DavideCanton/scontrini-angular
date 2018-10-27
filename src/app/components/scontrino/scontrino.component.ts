@@ -7,8 +7,8 @@ import { ScontriniStoreService } from 'app/services/scontrini-store';
 import { FormGroupFacade } from 'app/utils/form-group-facade';
 import * as _ from 'lodash';
 import * as moment from 'moment';
-import { BehaviorSubject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 
 
 export interface IScontrinoForm {
@@ -28,7 +28,11 @@ export class ScontrinoComponent implements OnInit {
 
     id$ = new BehaviorSubject<number>(0);
 
-    isCollapsed = false;
+    isCollapsed = true;
+
+    descriptions: Observable<string[]>;
+
+    loadingDesc = false;
 
     constructor(
         private service: ScontriniStoreService,
@@ -93,6 +97,13 @@ export class ScontrinoComponent implements OnInit {
                     });
                 }
             });
+
+        this.descriptions = new Observable<string>(obs => {
+            obs.next(this.facade.getValue('descrizione'));
+        })
+            .pipe(
+                switchMap(t => this.retriever.getDescriptions(t))
+            );
     }
 
     onSubmit() {
@@ -118,5 +129,9 @@ export class ScontrinoComponent implements OnInit {
         });
 
         return false;
+    }
+
+    changeTypeaheadLoading(value: boolean) {
+        this.loadingDesc = value;
     }
 }

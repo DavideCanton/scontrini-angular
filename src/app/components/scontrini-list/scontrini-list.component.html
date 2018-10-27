@@ -4,7 +4,7 @@
     </ngx-datatable>
 
     <ng-template let-row="row" #isPersonaleRow let-value="value">
-        <span class="fas" [class.fa-check]="value" [class.text-ok]="value" [class.fa-times]="!value"
-            [class.text-danger]="!value"></span>
+        <fa name="check" *ngIf="value" class="text-ok"></fa>
+        <fa name="times" *ngIf="!value" class="text-danger"></fa>
     </ng-template>
 </div>

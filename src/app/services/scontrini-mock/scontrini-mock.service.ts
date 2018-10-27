@@ -1,13 +1,10 @@
 import { Injectable } from '@angular/core';
+import { Scontrino } from 'app/models/scontrino';
+import { IScontriniRetriever } from 'app/services/interfaces/scontrini-retriever';
+import { mapModel } from 'app/utils/json-mapper-rxext';
 import * as moment from 'moment';
 import { Observable, of, range } from 'rxjs';
 import { delay, map, toArray } from 'rxjs/operators';
-
-import { Scontrino } from '../../models/scontrino';
-import { mapModel } from '../../utils/json-mapper-rxext';
-import { IScontriniRetriever } from '../interfaces/scontrini-retriever';
-
-
 
 @Injectable()
 export class ScontriniMockService implements IScontriniRetriever {
@@ -35,5 +32,9 @@ export class ScontriniMockService implements IScontriniRetriever {
 
   save(s: Scontrino): Observable<boolean> {
     return of(true);
+  }
+
+  getDescriptions(text: string): Observable<string[]> {
+    return of(['a', 'b', 'c']);
   }
 }

@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { AppRouterModule } from 'app/app-router.module';
 import { AppComponent } from 'app/app.component';
 import { BadgeComponent } from 'app/components/badge/badge.component';
@@ -17,7 +18,14 @@ import { SCONTRINI_SERVICE_TOKEN } from 'app/services/interfaces/scontrini-retri
 import { ScontriniHttpService } from 'app/services/scontrini-http/scontrini-http.service';
 import { ScontriniResolver } from 'app/services/scontrini.resolver';
 import { TesseractProviderService } from 'app/services/tesseract-provider/tesseract-provider.service';
-import { BsDatepickerConfig, BsDatepickerModule, CollapseModule, ProgressbarModule, TooltipModule } from 'ngx-bootstrap';
+import {
+  BsDatepickerConfig,
+  BsDatepickerModule,
+  CollapseModule,
+  ProgressbarModule,
+  TooltipModule,
+  TypeaheadModule,
+} from 'ngx-bootstrap';
 import { defineLocale } from 'ngx-bootstrap/chronos';
 import { itLocale } from 'ngx-bootstrap/locale';
 
@@ -47,6 +55,8 @@ defineLocale('it', itLocale);
     ProgressbarModule.forRoot(),
     TooltipModule.forRoot(),
     BsDatepickerModule.forRoot(),
+    TypeaheadModule.forRoot(),
+    AngularFontAwesomeModule
   ],
   providers: [
     {

@@ -16,8 +16,11 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Personale</label>
-                    <input class="form-control" formControlName="personale" type="checkbox">
+                    Personale
+                    <label class="switch pull-right">
+                        <input class="form-control" formControlName="personale" type="checkbox">
+                        <span class="slider round"></span>
+                    </label>
                 </div>
 
                 <div class="form-group">
@@ -27,7 +30,11 @@
 
                 <div class="form-group">
                     <label>Descrizione</label>
-                    <textarea class="form-control" formControlName="descrizione" rows="3"></textarea>
+                    <input class="form-control" formControlName="descrizione" type="text" [typeahead]="descriptions"
+                        typeaheadWaitMs="1000" (typeaheadLoading)="changeTypeaheadLoading($event)">
+                    <span *ngIf="loadingDesc" class="loading-desc">
+                        <fa name="refresh" animation="spin"></fa>&nbsp;Caricamento...
+                    </span>
                 </div>
 
                 <div *ngIf="!facade.valid">
@@ -39,7 +46,8 @@
 
                 <div class="row">
                     <button [disabled]="!facade.valid" type="submit" class="btn btn-success col-4 offset-1">Salva</button>
-                    <button [routerLink]="['/scontrini']" type="button" class="btn btn-danger col-4 offset-2">Torna alla lista</button>
+                    <button [routerLink]="['/scontrini']" type="button" class="btn btn-danger col-4 offset-2">Torna
+                        alla lista</button>
                 </div>
             </form>
         </div>
@@ -48,7 +56,7 @@
             <button type="button" class="btn btn-primary" (click)="isCollapsed = !isCollapsed">
                 {{ isCollapsed ? 'Apri' : 'Chiudi' }}
             </button>
-            <div [collapse]="isCollapsed">
+            <div *ngIf="!isCollapsed">
                 <hr>
                 <app-video-recognizer></app-video-recognizer>
             </div>
