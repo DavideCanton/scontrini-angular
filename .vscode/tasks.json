@@ -1,0 +1,21 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "npm",
+            "script": "ng",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Run server",
+            "type": "shell",
+            "command": "python C:\\Users\\Davide\\PycharmProjects\\ScontriniBE\\server.py",
+            "problemMatcher": []
+        }
+    ]
+}
