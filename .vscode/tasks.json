@@ -16,6 +16,11 @@
             "type": "shell",
             "command": "python C:\\Users\\Davide\\PycharmProjects\\ScontriniBE\\server.py",
             "problemMatcher": []
+        },
+        {
+            "type": "npm",
+            "script": "start",
+            "problemMatcher": []
         }
     ]
 }
