@@ -1,4 +1,4 @@
-import { JsonDate } from 'app/models/common';
+import { JsonDate, JsonDecimal } from 'app/models/common';
 import { Utils } from 'app/utils/utils';
 import { JsonClass, JsonProperty, SerializeFn } from 'at-json';
 import * as moment from 'moment';
@@ -7,9 +7,9 @@ import * as moment from 'moment';
 export class Scontrino {
     @JsonProperty()
     id: number;
-    @JsonProperty()
+    @JsonDecimal()
     importoDavide: number;
-    @JsonProperty()
+    @JsonDecimal()
     importoMonia: number;
     @JsonProperty()
     descrizione: string;
