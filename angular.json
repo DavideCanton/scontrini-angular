@@ -75,12 +75,10 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.spec.json",
             "scripts": [
-              "node_modules/moment/min/moment.min.js"
+              "src/assets/js/glfx.js"
             ],
             "styles": [
-              "src/styles.scss",
-              "src/assets/css/fontawesome.scss",
-              "src/assets/css/fa-solid.scss"
+              "src/styles.scss"
             ],
             "assets": [
               "src/assets",

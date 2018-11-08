@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Scontrino } from 'app/models/scontrino';
 import { IScontriniRetriever, SCONTRINI_SERVICE_TOKEN } from 'app/services/interfaces/scontrini-retriever';
@@ -38,10 +38,9 @@ export class ScontrinoComponent implements OnInit {
         private service: ScontriniStoreService,
         @Inject(SCONTRINI_SERVICE_TOKEN) private retriever: IScontriniRetriever,
         private route: ActivatedRoute,
-        private router: Router,
-        fb: FormBuilder) {
+        private router: Router) {
 
-        this.facade = new FormGroupFacade(fb);
+        this.facade = new FormGroupFacade();
 
         this.facade.buildFrom({
             importoDavide: {
@@ -61,9 +60,7 @@ export class ScontrinoComponent implements OnInit {
             }
         },
             {
-                validator: (g: FormGroup) => {
-                    if (!this.facade || !this.facade.group) return null;
-
+                validator: (_g: FormGroup) => {
                     const { importoDavide, importoMonia } = this.facade.getValues();
                     if (!_.isNil(importoDavide) || !_.isNil(importoMonia))
                         return null;

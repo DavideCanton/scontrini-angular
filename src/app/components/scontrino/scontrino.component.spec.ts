@@ -1,12 +1,19 @@
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { Scontrino } from 'app/models/scontrino';
+import { KeysPipe } from 'app/pipes/keys.pipe';
+import { SCONTRINI_SERVICE_TOKEN } from 'app/services/interfaces/scontrini-retriever';
+import { ScontriniMockService } from 'app/services/scontrini-mock/scontrini-mock.service';
+import { ScontriniStoreService } from 'app/services/scontrini-store';
+import { TesseractProviderService } from 'app/services/tesseract-provider/tesseract-provider.service';
+import { ActivatedRouteStub } from 'app/test-utils/activated-route-stub';
+import * as moment from 'moment';
+import { ProgressbarModule, TooltipModule, TypeaheadModule } from 'ngx-bootstrap';
 
-import { KeysPipe } from '../pipes/keys.pipe';
-import { SCONTRINI_SERVICE_TOKEN } from '../services/interfaces/scontrini-retriever';
-import { ScontriniMockService } from '../services/scontrini-mock/scontrini-mock.service';
-import { ActivatedRouteStub } from '../test-utils/activated-route-stub';
+import { VideoRecognizerComponent } from '../video-recognizer/video-recognizer.component';
 import { ScontrinoComponent } from './scontrino.component';
 
 describe('ScontrinoComponent', () => {
@@ -18,22 +25,33 @@ describe('ScontrinoComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         ScontrinoComponent,
-        KeysPipe
+        KeysPipe,
+        VideoRecognizerComponent
       ],
       imports: [
+        FormsModule,
         ReactiveFormsModule,
-        RouterTestingModule
+        TypeaheadModule.forRoot(),
+        ProgressbarModule.forRoot(),
+        RouterTestingModule,
+        AngularFontAwesomeModule,
+        TooltipModule.forRoot()
       ],
       providers: [
         { provide: SCONTRINI_SERVICE_TOKEN, useClass: ScontriniMockService },
-        { provide: ActivatedRoute, useValue: activatedRoute }
-
+        { provide: ActivatedRoute, useValue: activatedRoute },
+        TesseractProviderService
       ]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
+    const service = <ScontriniStoreService>TestBed.get(ScontriniStoreService);
+    service.scontrini = [new Scontrino()];
+    service.scontrini[0].id = 1;
+    service.scontrini[0].data = moment();
+
     fixture = TestBed.createComponent(ScontrinoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

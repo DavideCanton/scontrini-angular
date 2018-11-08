@@ -1,10 +1,12 @@
 import { APP_BASE_HREF } from '@angular/common';
-import { TestBed, async } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { AppComponent } from './app.component';
-import { BadgeComponent } from './badge/badge.component';
-import { TopbarComponent } from './topbar/topbar.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { async, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { BsDatepickerModule } from 'ngx-bootstrap';
+
+import { AppComponent } from './app.component';
+import { BadgeComponent } from './components/badge/badge.component';
+import { TopbarComponent } from './components/topbar/topbar.component';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -16,7 +18,8 @@ describe('AppComponent', () => {
       ],
       imports: [
         RouterTestingModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        BsDatepickerModule.forRoot(),
       ],
       providers: [
         { provide: APP_BASE_HREF, useValue: '/' }
