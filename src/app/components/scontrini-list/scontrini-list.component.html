@@ -1,10 +1,25 @@
 <div class="scontrini-list-container">
-    <ngx-datatable class="material" [loadingIndicator]="loading" trackByProp="id" columnMode="force" [rows]="scontrini"
-        [rowHeight]="50" [headerHeight]="50" [columns]="columns" [scrollbarV]="true" selectionType="single" (select)='onSelect($event)'>
+    <ngx-datatable class="material"
+                   [loadingIndicator]="loading"
+                   trackByProp="id"
+                   columnMode="force"
+                   [rows]="scontrini"
+                   [rowHeight]="50"
+                   [headerHeight]="50"
+                   [columns]="columns"
+                   [scrollbarV]="true"
+                   selectionType="single"
+                   (select)='onSelect($event)'>
     </ngx-datatable>
 
-    <ng-template let-row="row" #isPersonaleRow let-value="value">
-        <fa name="check" *ngIf="value" class="text-ok"></fa>
-        <fa name="times" *ngIf="!value" class="text-danger"></fa>
+    <ng-template let-row="row"
+                 #isPersonaleRow
+                 let-value="value">
+        <fa name="check"
+            *ngIf="value"
+            class="text-ok"></fa>
+        <fa name="times"
+            *ngIf="!value"
+            class="text-danger"></fa>
     </ng-template>
 </div>

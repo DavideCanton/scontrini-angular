@@ -1,39 +1,54 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-3 col-12">
-            <form [formGroup]="facade.group" (submit)="onSubmit()">
+            <form [formGroup]="facade.group"
+                  (submit)="onSubmit()">
                 <p *ngIf="(id$ | async) > 0">Scontrino con id {{ id$ | async }}</p>
                 <p *ngIf="(id$ | async) === 0">Scontrino nuovo</p>
 
                 <div class="form-group">
                     <label>Importo Davide</label>
-                    <input class="form-control" formControlName="importoDavide" type="number">
+                    <input class="form-control"
+                           formControlName="importoDavide"
+                           type="number">
                 </div>
 
                 <div class="form-group">
                     <label>Importo Monia</label>
-                    <input class="form-control" formControlName="importoMonia" type="number">
+                    <input class="form-control"
+                           formControlName="importoMonia"
+                           type="number">
                 </div>
 
                 <div class="form-group">
                     Personale
                     <label class="switch pull-right">
-                        <input class="form-control" formControlName="personale" type="checkbox">
+                        <input class="form-control"
+                               formControlName="personale"
+                               type="checkbox">
                         <span class="slider round"></span>
                     </label>
                 </div>
 
                 <div class="form-group">
                     <label>Data</label>
-                    <input class="form-control" formControlName="data" bsDatepicker>
+                    <input class="form-control"
+                           formControlName="data"
+                           bsDatepicker>
                 </div>
 
                 <div class="form-group">
                     <label>Descrizione</label>
-                    <input class="form-control" formControlName="descrizione" type="text" [typeahead]="descriptions"
-                        typeaheadWaitMs="1000" (typeaheadLoading)="changeTypeaheadLoading($event)">
-                    <span *ngIf="loadingDesc" class="loading-desc">
-                        <fa name="refresh" animation="spin"></fa>&nbsp;Caricamento...
+                    <input class="form-control"
+                           formControlName="descrizione"
+                           type="text"
+                           [typeahead]="descriptions"
+                           typeaheadWaitMs="1000"
+                           (typeaheadLoading)="changeTypeaheadLoading($event)">
+                    <span *ngIf="loadingDesc"
+                          class="loading-desc">
+                        <fa name="refresh"
+                            animation="spin"></fa>&nbsp;Caricamento...
                     </span>
                 </div>
 
@@ -45,15 +60,21 @@
                 </div>
 
                 <div class="row">
-                    <button [disabled]="!facade.valid" type="submit" class="btn btn-success col-4 offset-1">Salva</button>
-                    <button [routerLink]="['/scontrini']" type="button" class="btn btn-danger col-4 offset-2">Torna
+                    <button [disabled]="!facade.valid"
+                            type="submit"
+                            class="btn btn-success col-4 offset-1">Salva</button>
+                    <button [routerLink]="['/scontrini']"
+                            type="button"
+                            class="btn btn-danger col-4 offset-2">Torna
                         alla lista</button>
                 </div>
             </form>
         </div>
         <div class="col-md-6 col-12">
             <div class="spacer d-block d-lg-none"></div>
-            <button type="button" class="btn btn-primary" (click)="isCollapsed = !isCollapsed">
+            <button type="button"
+                    class="btn btn-primary"
+                    (click)="isCollapsed = !isCollapsed">
                 {{ isCollapsed ? 'Apri' : 'Chiudi' }}
             </button>
             <div *ngIf="!isCollapsed">

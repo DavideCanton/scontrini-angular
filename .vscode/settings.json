@@ -2,5 +2,8 @@
     "codemetrics.basics.ComplexityLevelHigh": 15,
     "codemetrics.basics.ComplexityLevelNormal": 10,
     "codemetrics.basics.CodeLensHiddenUnder": 0,
-    "typescript.tsdk": "node_modules\\typescript\\lib"
+    "typescript.tsdk": "node_modules\\typescript\\lib",
+    "html.format.indentInnerHtml": true,
+    "html.format.wrapAttributes": "force-aligned",
+    "html.format.wrapLineLength": 0
 }
