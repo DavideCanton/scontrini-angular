@@ -28,17 +28,14 @@ module.exports = function (config) {
     logLevel: config.LOG_INFO,
     autoWatch: true,
     customLaunchers: {
-      ChromeHeadless: {
+      ChromeDebugging: {
         base: 'Chrome',
         flags: [
-          '--headless',
-          '--disable-gpu',
-          '--no-sandbox',
           '--remote-debugging-port=9333',
         ]
       }
     },
-    browsers: ['ChromeHeadless'],
-    singleRun: true
+    browsers: ['ChromeDebugging'],
+    singleRun: false
   });
 };
