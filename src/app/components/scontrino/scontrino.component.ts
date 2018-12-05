@@ -7,8 +7,8 @@ import { ScontriniStoreService } from 'app/services/scontrini-store';
 import { FormGroupFacade } from 'app/utils/form-group-facade';
 import * as _ from 'lodash';
 import * as moment from 'moment';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { map, switchMap, startWith } from 'rxjs/operators';
 
 
 export interface IScontrinoForm {
@@ -95,9 +95,7 @@ export class ScontrinoComponent implements OnInit {
                 }
             });
 
-        this.descriptions = new Observable<string>(obs => {
-            obs.next(this.facade.getValue('descrizione'));
-        })
+        this.descriptions = of(this.facade.getValue('descrizione'))
             .pipe(
                 switchMap(t => this.retriever.getDescriptions(t))
             );

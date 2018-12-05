@@ -98,13 +98,15 @@ export class VideoRecognizerComponent implements AfterViewInit, OnDestroy {
 
     const stream = <MediaStream>this.video.nativeElement.srcObject;
 
-    stream.getAudioTracks().forEach(function (track) {
-      track.stop();
-    });
+    if (stream) {
+      stream.getAudioTracks().forEach(function (track) {
+        track.stop();
+      });
 
-    stream.getVideoTracks().forEach(function (track) {
-      track.stop();
-    });
+      stream.getVideoTracks().forEach(function (track) {
+        track.stop();
+      });
+    }
   }
 
   requestAnimationFrameCallback() {
