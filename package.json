@@ -8,6 +8,7 @@
     "cover": "ng test --watch=false --code-coverage --single-run --browsers=ChromeHeadless && start /max coverage/index.html",
     "build": "ng build --prod",
     "test": "ng test",
+    "test-headless": "ng test --watch=false --browsers=ChromeHeadless",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
@@ -60,6 +61,7 @@
     "karma-jasmine": "~1.1.2",
     "karma-jasmine-html-reporter": "^1.4.0",
     "protractor": "^5.4.1",
+    "puppeteer": "^1.11.0",
     "ts-node": "~7.0.1",
     "tslint": "~5.11.0",
     "typescript": "3.1.6",
