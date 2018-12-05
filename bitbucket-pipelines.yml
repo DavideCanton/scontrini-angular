@@ -10,6 +10,11 @@ pipelines:
     - step:
         caches:
           - node
+          - npm
         script: # Modify the commands below to build your repository.
           - npm install
           - npm test
+
+definitions:
+  caches:
+    npm: $HOME/.npm
