@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Scontrino } from 'app/models/scontrino';
 import { IScontriniRetriever } from 'app/services/interfaces/scontrini-retriever';
-import { mapModelArray } from 'app/utils/json-mapper-rxext';
+import { mapModelArray } from 'at-json-rxjs';
 import { Observable } from 'rxjs';
 import { map, mapTo } from 'rxjs/operators';
 

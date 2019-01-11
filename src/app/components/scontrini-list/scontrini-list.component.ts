@@ -42,7 +42,7 @@ export class ScontriniListComponent implements OnInit {
       { prop: 'importoMonia' },
       { prop: 'descrizione' },
       { prop: 'personale', cellTemplate: this.isPersonaleRow },
-      { prop: 'data', name: 'Data', pipe: pipe }
+      { prop: 'data', name: 'Data', pipe }
     ];
 
     this.loadData();

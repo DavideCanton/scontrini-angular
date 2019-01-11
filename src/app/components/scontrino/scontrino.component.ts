@@ -8,7 +8,7 @@ import { FormGroupFacade } from 'app/utils/form-group-facade';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { map, switchMap, startWith } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 
 
 export interface IScontrinoForm {

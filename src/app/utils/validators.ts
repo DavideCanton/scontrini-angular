@@ -1,4 +1,4 @@
-import { AbstractControl, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, ValidatorFn, Validators } from '@angular/forms';
 import * as _ from 'lodash';
 
 function getSafeParentControlValue<T>(propName: string, ctrl: AbstractControl): T | null {

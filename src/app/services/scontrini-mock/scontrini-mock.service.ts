@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Scontrino } from 'app/models/scontrino';
 import { IScontriniRetriever } from 'app/services/interfaces/scontrini-retriever';
-import { mapModel } from 'app/utils/json-mapper-rxext';
+import { mapModel } from 'at-json-rxjs';
 import * as moment from 'moment';
 import { Observable, of, range } from 'rxjs';
 import { delay, map, toArray } from 'rxjs/operators';

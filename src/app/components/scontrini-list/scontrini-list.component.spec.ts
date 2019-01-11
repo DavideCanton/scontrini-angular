@@ -8,6 +8,7 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { Scontrino } from 'app/models/scontrino';
 import { SCONTRINI_SERVICE_TOKEN } from 'app/services/interfaces/scontrini-retriever';
 import { ScontriniMockService } from 'app/services/scontrini-mock/scontrini-mock.service';
+import { ScontriniStoreService } from 'app/services/scontrini-store';
 import { BlankComponent } from 'app/test-utils/blank.component';
 import { CommonTestUtilsModule } from 'app/test-utils/common-test-utils.module';
 import * as _ from 'lodash';
@@ -15,7 +16,6 @@ import * as moment from 'moment';
 
 import { BadgeComponent } from '../badge/badge.component';
 import { ScontriniListComponent } from './scontrini-list.component';
-import { ScontriniStoreService } from 'app/services/scontrini-store';
 
 
 const routes: Routes = [
