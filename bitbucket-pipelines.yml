@@ -13,6 +13,7 @@ pipelines:
           - npm
         script: # Modify the commands below to build your repository.
           - npm install
+          - apt install -yq libX11-xcb
           - npm run test-headless
 
 definitions:
