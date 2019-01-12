@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Scontrino } from 'app/models/scontrino';
 import { IScontriniRetriever } from 'app/services/interfaces/scontrini-retriever';
-import { mapModelArray } from 'at-json-rxjs';
+import { mapJsonArray } from 'at-json-rxjs';
 import { Observable } from 'rxjs';
 import { map, mapTo } from 'rxjs/operators';
 
@@ -19,7 +19,7 @@ export class ScontriniHttpService implements IScontriniRetriever {
   retrieveScontrini(): Observable<Scontrino[]> {
     return this.http.get<{ results: any[] }>(URL_SCONTRINI).pipe(
       map(r => r.results),
-      mapModelArray(Scontrino)
+      mapJsonArray(Scontrino)
     );
   }
 

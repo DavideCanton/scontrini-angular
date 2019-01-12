@@ -8,7 +8,7 @@
     "cover": "ng test --watch=false --code-coverage --single-run --browsers=ChromeHeadless && start /max coverage/index.html",
     "build": "ng build --prod",
     "test": "ng test",
-    "test-headless": "ng test --watch=false --browsers=ChromeHeadless",
+    "test-headless": "ng test --watch=false --karmaConfig=karma.conf.ci.js",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Scontrino } from 'app/models/scontrino';
 import { IScontriniRetriever } from 'app/services/interfaces/scontrini-retriever';
-import { mapModel } from 'at-json-rxjs';
+import { mapJsonModel } from 'at-json-rxjs';
 import * as moment from 'moment';
 import { Observable, of, range } from 'rxjs';
 import { delay, map, toArray } from 'rxjs/operators';
@@ -24,7 +24,7 @@ export class ScontriniMockService implements IScontriniRetriever {
   retrieveScontrini(): Observable<Scontrino[]> {
     return range(0, this.n).pipe(
       map(ScontriniMockService.mapScontrini),
-      mapModel(Scontrino),
+      mapJsonModel(Scontrino),
       delay(1000),
       toArray()
     );
