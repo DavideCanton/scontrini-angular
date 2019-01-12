@@ -9,6 +9,7 @@ describe('KeysPipe', () => {
   it('works with null', () => {
     const pipe = new KeysPipe();
     expect(pipe).toBeTruthy();
+
     const array = pipe.transform(null);
     expect(array.length).toBe(0);
   });
