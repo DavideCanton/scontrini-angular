@@ -7,7 +7,7 @@ import { ScontriniStoreService } from 'app/services/scontrini-store';
 import { FormGroupFacade } from 'app/utils/form-group-facade';
 import * as _ from 'lodash';
 import * as moment from 'moment';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of, Observer } from 'rxjs';
 import { filter, map, switchMap, mergeMap } from 'rxjs/operators';
 
 
@@ -95,11 +95,11 @@ export class ScontrinoComponent implements OnInit {
                 }
             });
 
-        // TODO non funziona
-        this.descriptions = of(this.facade.getValue('descrizione'))
-            .pipe(
-                mergeMap(t => this.retriever.getDescriptions(this.facade.getValue('descrizione')))
-            );
+        this.descriptions = Observable.create((observer: Observer<string>) => {
+            observer.next(this.facade.getValue('descrizione'));
+        }).pipe(
+            mergeMap((t: string) => this.retriever.getDescriptions(t))
+        );
     }
 
     onSubmit() {
