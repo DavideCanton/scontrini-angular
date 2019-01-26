@@ -7,6 +7,8 @@ import { BsDatepickerModule } from 'ngx-bootstrap';
 import { AppComponent } from './app.component';
 import { BadgeComponent } from './components/badge/badge.component';
 import { TopbarComponent } from './components/topbar/topbar.component';
+import { MessageService } from './services/messages/message.service';
+import { MESSAGE_CONSUMER } from './services/messages/messages-types';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -22,7 +24,11 @@ describe('AppComponent', () => {
         BsDatepickerModule.forRoot(),
       ],
       providers: [
-        { provide: APP_BASE_HREF, useValue: '/' }
+        { provide: APP_BASE_HREF, useValue: '/' },
+        {
+          provide: MESSAGE_CONSUMER,
+          useClass: MessageService
+        }
       ]
     }).compileComponents();
   }));

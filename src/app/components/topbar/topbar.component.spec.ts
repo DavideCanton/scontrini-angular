@@ -1,7 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { MessageService } from 'app/services/messages/message.service';
+import { MESSAGE_CONSUMER } from 'app/services/messages/messages-types';
 
 import { TopbarComponent } from './topbar.component';
-import { RouterTestingModule } from '@angular/router/testing';
 
 describe('TopbarComponent', () => {
   let component: TopbarComponent;
@@ -14,6 +16,12 @@ describe('TopbarComponent', () => {
       ],
       imports: [
         RouterTestingModule
+      ],
+      providers: [
+        {
+          provide: MESSAGE_CONSUMER,
+          useClass: MessageService
+        }
       ]
     })
       .compileComponents();

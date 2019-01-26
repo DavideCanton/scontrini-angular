@@ -7,6 +7,8 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { Scontrino } from 'app/models/scontrino';
 import { SCONTRINI_SERVICE_TOKEN } from 'app/services/interfaces/scontrini-retriever';
+import { MessageService } from 'app/services/messages/message.service';
+import { MESSAGE_PRODUCER } from 'app/services/messages/messages-types';
 import { ScontriniMockService } from 'app/services/scontrini-mock/scontrini-mock.service';
 import { ScontriniStoreService } from 'app/services/scontrini-store';
 import { BlankComponent } from 'app/test-utils/blank.component';
@@ -45,6 +47,7 @@ describe('ScontriniListComponent', () => {
           provide: SCONTRINI_SERVICE_TOKEN,
           useClass: ScontriniMockService
         },
+        { provide: MESSAGE_PRODUCER, useClass: MessageService },
         ScontriniStoreService
       ]
     })

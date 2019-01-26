@@ -15,6 +15,8 @@ import { ProgressbarModule, TooltipModule, TypeaheadModule } from 'ngx-bootstrap
 
 import { VideoRecognizerComponent } from '../video-recognizer/video-recognizer.component';
 import { ScontrinoComponent } from './scontrino.component';
+import { MESSAGE_PRODUCER } from 'app/services/messages/messages-types';
+import { MessageService } from 'app/services/messages/message.service';
 
 describe('ScontrinoComponent', () => {
   let component: ScontrinoComponent;
@@ -39,6 +41,7 @@ describe('ScontrinoComponent', () => {
       ],
       providers: [
         { provide: SCONTRINI_SERVICE_TOKEN, useClass: ScontriniMockService },
+        { provide: MESSAGE_PRODUCER, useClass: MessageService },
         { provide: ActivatedRoute, useValue: activatedRoute },
         TesseractProviderService
       ]
@@ -52,14 +55,16 @@ describe('ScontrinoComponent', () => {
     service.scontrini[0].id = 1;
     service.scontrini[0].data = moment();
 
+    activatedRoute.reset();
+
     fixture = TestBed.createComponent(ScontrinoComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create with a valid scontrino if id is valid', fakeAsync(() => {
     expect(component).toBeTruthy();
     activatedRoute.setParamMap({ id: 1 });
+    fixture.detectChanges();
 
     tick();
 
@@ -69,6 +74,7 @@ describe('ScontrinoComponent', () => {
   it('should create with a new scontrino if id is invalid', fakeAsync(() => {
     expect(component).toBeTruthy();
     activatedRoute.setParamMap({ id: 999999 });
+    fixture.detectChanges();
 
     tick();
 
@@ -77,6 +83,7 @@ describe('ScontrinoComponent', () => {
 
   it('should create with a new scontrino if id is not present', fakeAsync(() => {
     expect(component).toBeTruthy();
+    fixture.detectChanges();
 
     tick();
 
