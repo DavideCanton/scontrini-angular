@@ -43,7 +43,8 @@
                            formControlName="descrizione"
                            type="text"
                            [typeahead]="descriptions"
-                           typeaheadWaitMs="1000"
+                           [typeaheadMinLength]="3"
+                           [typeaheadWaitMs]="100"
                            (typeaheadLoading)="changeTypeaheadLoading($event)">
                     <span *ngIf="loadingDesc"
                           class="loading-desc">
