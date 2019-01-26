@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import * as moment from 'moment';
 import { BehaviorSubject, Observable, of, Observer } from 'rxjs';
 import { filter, map, switchMap, mergeMap } from 'rxjs/operators';
+import { MESSAGE_PRODUCER, IMessageProducer, IMessages } from 'app/services/messages/messages-types';
 
 
 export interface IScontrinoForm {
@@ -37,6 +38,7 @@ export class ScontrinoComponent implements OnInit {
     constructor(
         private service: ScontriniStoreService,
         @Inject(SCONTRINI_SERVICE_TOKEN) private retriever: IScontriniRetriever,
+        @Inject(MESSAGE_PRODUCER) private producer: IMessageProducer<IMessages>,
         private route: ActivatedRoute,
         private router: Router) {
 
@@ -73,6 +75,7 @@ export class ScontrinoComponent implements OnInit {
     }
 
     ngOnInit() {
+
         this.route.paramMap.pipe(
             map(p => +p.get('id') || 0),
             map(id => {
@@ -83,6 +86,8 @@ export class ScontrinoComponent implements OnInit {
             }))
             .subscribe(s => {
                 this.id$.next(s ? s.id : 0);
+
+                this.producer.title.emit(s && s.id > 0 ? `Modifica scontrino #${s.id}` : 'Creazione nuovo scontrino');
 
                 if (s) {
                     this.facade.patchValues({

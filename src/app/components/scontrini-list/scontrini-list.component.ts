@@ -1,4 +1,4 @@
-import { Component, NgZone, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, NgZone, OnInit, TemplateRef, ViewChild, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { DatatableComponent, TableColumn } from '@swimlane/ngx-datatable';
 import * as moment from 'moment';
@@ -6,6 +6,7 @@ import * as moment from 'moment';
 import { Scontrino } from '../../models/scontrino';
 import { ScontriniStoreService } from '../../services/scontrini-store';
 import { Utils } from '../../utils/utils';
+import { IMessages, IMessageProducer, MESSAGE_PRODUCER } from 'app/services/messages/messages-types';
 
 @Component({
   templateUrl: './scontrini-list.component.html',
@@ -24,6 +25,7 @@ export class ScontriniListComponent implements OnInit {
 
   constructor(
     private store: ScontriniStoreService,
+    @Inject(MESSAGE_PRODUCER) private producer: IMessageProducer<IMessages>,
     private router: Router,
     private zone: NgZone) {
 
@@ -46,6 +48,8 @@ export class ScontriniListComponent implements OnInit {
     ];
 
     this.loadData();
+
+    this.producer.title.emit('Lista scontrini');
   }
 
   loadData() {

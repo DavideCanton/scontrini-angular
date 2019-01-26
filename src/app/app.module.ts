@@ -28,6 +28,8 @@ import {
 } from 'ngx-bootstrap';
 import { defineLocale } from 'ngx-bootstrap/chronos';
 import { itLocale } from 'ngx-bootstrap/locale';
+import { MESSAGE_PRODUCER, MESSAGE_CONSUMER } from './services/messages/messages-types';
+import { MessageService } from './services/messages/message.service';
 
 
 defineLocale('it', itLocale);
@@ -62,6 +64,14 @@ defineLocale('it', itLocale);
     {
       provide: SCONTRINI_SERVICE_TOKEN,
       useClass: ScontriniHttpService
+    },
+    {
+      provide: MESSAGE_PRODUCER,
+      useClass: MessageService
+    },
+    {
+      provide: MESSAGE_CONSUMER,
+      useExisting: MESSAGE_PRODUCER
     },
     {
       provide: BsDatepickerConfig,

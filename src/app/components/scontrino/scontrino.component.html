@@ -3,54 +3,57 @@
         <div class="col-12">
             <form [formGroup]="facade.group"
                   (submit)="onSubmit()">
-                <p *ngIf="(id$ | async) > 0">Scontrino con id {{ id$ | async }}</p>
-                <p *ngIf="(id$ | async) === 0">Scontrino nuovo</p>
-
-                <div class="form-group">
-                    <label>Importo Davide</label>
-                    <input class="form-control"
-                           formControlName="importoDavide"
-                           type="number">
-                </div>
-
-                <div class="form-group">
-                    <label>Importo Monia</label>
-                    <input class="form-control"
-                           formControlName="importoMonia"
-                           type="number">
-                </div>
-
-                <div class="form-group">
-                    Personale
-                    <label class="switch pull-right">
+                <div class="row">
+                    <div class="form-group col-md-4 col-12">
+                        <label>Importo Davide</label>
                         <input class="form-control"
-                               formControlName="personale"
-                               type="checkbox">
-                        <span class="slider round"></span>
-                    </label>
-                </div>
+                               formControlName="importoDavide"
+                               type="number">
+                    </div>
 
-                <div class="form-group">
-                    <label>Data</label>
-                    <input class="form-control"
-                           formControlName="data"
-                           bsDatepicker>
-                </div>
+                    <div class="form-group col-md-4 col-12">
+                        <label>Importo Monia</label>
+                        <input class="form-control"
+                               formControlName="importoMonia"
+                               type="number">
+                    </div>
 
-                <div class="form-group">
-                    <label>Descrizione</label>
-                    <input class="form-control"
-                           formControlName="descrizione"
-                           type="text"
-                           [typeahead]="descriptions"
-                           [typeaheadMinLength]="3"
-                           [typeaheadWaitMs]="100"
-                           (typeaheadLoading)="changeTypeaheadLoading($event)">
-                    <div class="loading-desc">
-                        <ng-container *ngIf="loadingDesc">
-                            <fa name="refresh"
-                                animation="spin"></fa>&nbsp;Caricamento...
-                        </ng-container>
+                    <div class="form-group col-md-4 col-12 align-self-end">
+                        <div class="row">
+                            <div class="col-6 text-right">Personale</div>
+                            <div class="col-6 text-left">
+                                <label class="switch">
+                                    <input class="form-control"
+                                           formControlName="personale"
+                                           type="checkbox">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-4 col-12">
+                        <label>Data</label>
+                        <input class="form-control"
+                               formControlName="data"
+                               bsDatepicker>
+                    </div>
+
+                    <div class="form-group col-md-4 col-12">
+                        <label>Descrizione</label>
+                        <input class="form-control"
+                               formControlName="descrizione"
+                               type="text"
+                               [typeahead]="descriptions"
+                               [typeaheadMinLength]="3"
+                               [typeaheadWaitMs]="100"
+                               (typeaheadLoading)="changeTypeaheadLoading($event)">
+                        <div class="loading-desc">
+                            <ng-container *ngIf="loadingDesc">
+                                <fa name="refresh"
+                                    animation="spin"></fa>&nbsp;Caricamento...
+                            </ng-container>
+                        </div>
                     </div>
                 </div>
 
@@ -71,6 +74,6 @@
                         alla lista</button>
                 </div>
             </form>
-        </div>        
+        </div>
     </div>
 </div>
