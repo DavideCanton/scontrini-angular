@@ -7,8 +7,8 @@ import { ScontriniStoreService } from 'app/services/scontrini-store';
 import { FormGroupFacade } from 'app/utils/form-group-facade';
 import * as _ from 'lodash';
 import * as moment from 'moment';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { filter, map, switchMap } from 'rxjs/operators';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { filter, map, switchMap, mergeMap } from 'rxjs/operators';
 
 
 export interface IScontrinoForm {
@@ -96,11 +96,9 @@ export class ScontrinoComponent implements OnInit {
             });
 
         // TODO non funziona
-        this.descriptions = this.facade.getControl('descrizione')
-            .valueChanges
+        this.descriptions = of(this.facade.getValue('descrizione'))
             .pipe(
-                filter(v => !!v),
-                switchMap(t => this.retriever.getDescriptions(t))
+                mergeMap(t => this.retriever.getDescriptions(this.facade.getValue('descrizione')))
             );
     }
 

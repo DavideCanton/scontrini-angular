@@ -46,11 +46,12 @@
                            [typeaheadMinLength]="3"
                            [typeaheadWaitMs]="100"
                            (typeaheadLoading)="changeTypeaheadLoading($event)">
-                    <span *ngIf="loadingDesc"
-                          class="loading-desc">
-                        <fa name="refresh"
-                            animation="spin"></fa>&nbsp;Caricamento...
-                    </span>
+                    <div class="loading-desc">
+                        <ng-container *ngIf="loadingDesc">
+                            <fa name="refresh"
+                                animation="spin"></fa>&nbsp;Caricamento...
+                        </ng-container>
+                    </div>
                 </div>
 
                 <div *ngIf="!facade.valid">
