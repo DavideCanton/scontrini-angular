@@ -1,6 +1,6 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-3 col-12">
+        <div class="col-12">
             <form [formGroup]="facade.group"
                   (submit)="onSubmit()">
                 <p *ngIf="(id$ | async) > 0">Scontrino con id {{ id$ | async }}</p>
@@ -71,18 +71,6 @@
                         alla lista</button>
                 </div>
             </form>
-        </div>
-        <div class="col-md-6 col-12">
-            <div class="spacer d-block d-lg-none"></div>
-            <button type="button"
-                    class="btn btn-primary"
-                    (click)="isCollapsed = !isCollapsed">
-                {{ isCollapsed ? 'Apri' : 'Chiudi' }}
-            </button>
-            <div *ngIf="!isCollapsed">
-                <hr>
-                <app-video-recognizer></app-video-recognizer>
-            </div>
-        </div>
+        </div>        
     </div>
 </div>
