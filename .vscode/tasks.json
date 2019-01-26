@@ -14,7 +14,7 @@
         {
             "label": "Run server",
             "type": "shell",
-            "command": "python C:\\Users\\Davide\\PycharmProjects\\ScontriniBE\\server.py",
+            "command": "python ..\\ScontriniBE\\server.py",
             "problemMatcher": []
         },
         {
