@@ -22,4 +22,14 @@
             *ngIf="!value"
             class="text-danger"></fa>
     </ng-template>
+
+    <ng-template let-value="value"
+                 #dateTemplate>
+        {{ value | date:'shortDate' }}
+    </ng-template>
+
+    <ng-template let-value="value"
+                 #currencyTemplate>
+        {{ value | currency:'EUR' }}
+    </ng-template>
 </div>

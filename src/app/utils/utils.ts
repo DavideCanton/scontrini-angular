@@ -14,6 +14,16 @@ export class Utils {
     static formatDateForShow(date: moment.Moment | null): string {
         return date ? date.format('DD/MM/YYYY') : '';
     }
+
+    static dateComparator(d1: moment.Moment | null, d2: moment.Moment | null): number {
+        if (!d1 && !d2) return 0;
+        if (!d1) return -1;
+        if (!d2) return 1;
+
+        if (d1.isSame(d2)) return 0;
+        if (d1.isBefore(d2)) return -1;
+        return 1;
+    }
 }
 
 type N<T> = NonNullable<T>;

@@ -1,6 +1,6 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, registerLocaleData } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
@@ -15,6 +15,8 @@ import { VideoRecognizerComponent } from 'app/components/video-recognizer/video-
 import { KeysPipe } from 'app/pipes/keys.pipe';
 import { UnsafeHtmlPipe } from 'app/pipes/unsafe-html.pipe';
 import { SCONTRINI_SERVICE_TOKEN } from 'app/services/interfaces/scontrini-retriever';
+import { MessageService } from 'app/services/messages/message.service';
+import { MESSAGE_CONSUMER, MESSAGE_PRODUCER } from 'app/services/messages/messages-types';
 import { ScontriniHttpService } from 'app/services/scontrini-http/scontrini-http.service';
 import { ScontriniResolver } from 'app/services/scontrini.resolver';
 import { TesseractProviderService } from 'app/services/tesseract-provider/tesseract-provider.service';
@@ -28,11 +30,10 @@ import {
 } from 'ngx-bootstrap';
 import { defineLocale } from 'ngx-bootstrap/chronos';
 import { itLocale } from 'ngx-bootstrap/locale';
-import { MESSAGE_PRODUCER, MESSAGE_CONSUMER } from './services/messages/messages-types';
-import { MessageService } from './services/messages/message.service';
-
+import localeIt from '@angular/common/locales/it';
 
 defineLocale('it', itLocale);
+registerLocaleData(localeIt);
 
 @NgModule({
   declarations: [
@@ -61,6 +62,10 @@ defineLocale('it', itLocale);
     AngularFontAwesomeModule
   ],
   providers: [
+    {
+      provide: LOCALE_ID,
+      useValue: 'it-IT'
+    },
     {
       provide: SCONTRINI_SERVICE_TOKEN,
       useClass: ScontriniHttpService
