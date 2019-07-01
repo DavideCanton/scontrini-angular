@@ -1,6 +1,7 @@
 import { CommonModule, registerLocaleData } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { NgModule, LOCALE_ID } from '@angular/core';
+import localeIt from '@angular/common/locales/it';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
@@ -20,75 +21,69 @@ import { MESSAGE_CONSUMER, MESSAGE_PRODUCER } from 'app/services/messages/messag
 import { ScontriniHttpService } from 'app/services/scontrini-http/scontrini-http.service';
 import { ScontriniResolver } from 'app/services/scontrini.resolver';
 import { TesseractProviderService } from 'app/services/tesseract-provider/tesseract-provider.service';
-import {
-  BsDatepickerConfig,
-  BsDatepickerModule,
-  CollapseModule,
-  ProgressbarModule,
-  TooltipModule,
-  TypeaheadModule,
-} from 'ngx-bootstrap';
+import { BsDatepickerConfig, BsDatepickerModule, CollapseModule, ModalModule, ProgressbarModule, TooltipModule, TypeaheadModule } from 'ngx-bootstrap';
 import { defineLocale } from 'ngx-bootstrap/chronos';
 import { itLocale } from 'ngx-bootstrap/locale';
-import localeIt from '@angular/common/locales/it';
 
 defineLocale('it', itLocale);
 registerLocaleData(localeIt);
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    BadgeComponent,
-    ScontriniListComponent,
-    ScontrinoComponent,
-    TopbarComponent,
-    VideoRecognizerComponent,
-    KeysPipe,
-    UnsafeHtmlPipe
-  ],
-  imports: [
-    FormsModule,
-    NgxDatatableModule,
-    BrowserModule,
-    ReactiveFormsModule,
-    CommonModule,
-    HttpClientModule,
-    AppRouterModule,
-    CollapseModule.forRoot(),
-    ProgressbarModule.forRoot(),
-    TooltipModule.forRoot(),
-    BsDatepickerModule.forRoot(),
-    TypeaheadModule.forRoot(),
-    AngularFontAwesomeModule
-  ],
-  providers: [
-    {
-      provide: LOCALE_ID,
-      useValue: 'it-IT'
-    },
-    {
-      provide: SCONTRINI_SERVICE_TOKEN,
-      useClass: ScontriniHttpService
-    },
-    {
-      provide: MESSAGE_PRODUCER,
-      useClass: MessageService
-    },
-    {
-      provide: MESSAGE_CONSUMER,
-      useExisting: MESSAGE_PRODUCER
-    },
-    {
-      provide: BsDatepickerConfig,
-      useValue: <BsDatepickerConfig>{
-        dateInputFormat: 'DD/MM/YYYY',
-        showWeekNumbers: false,
-        containerClass: 'theme-green'
-      }
-    },
-    TesseractProviderService,
-    ScontriniResolver
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        BadgeComponent,
+        ScontriniListComponent,
+        ScontrinoComponent,
+        TopbarComponent,
+        VideoRecognizerComponent,
+        KeysPipe,
+        UnsafeHtmlPipe
+    ],
+    imports: [
+        FormsModule,
+        NgxDatatableModule,
+        BrowserModule,
+        ReactiveFormsModule,
+        CommonModule,
+        HttpClientModule,
+        AppRouterModule,
+        CollapseModule.forRoot(),
+        ProgressbarModule.forRoot(),
+        TooltipModule.forRoot(),
+        ModalModule.forRoot(),
+        BsDatepickerModule.forRoot(),
+        TypeaheadModule.forRoot(),
+        AngularFontAwesomeModule
+    ],
+    providers: [
+        {
+            provide: LOCALE_ID,
+            useValue: 'it-IT'
+        },
+        {
+            provide: SCONTRINI_SERVICE_TOKEN,
+            useClass: ScontriniHttpService
+        },
+        {
+            provide: MESSAGE_PRODUCER,
+            useClass: MessageService
+        },
+        {
+            provide: MESSAGE_CONSUMER,
+            useExisting: MESSAGE_PRODUCER
+        },
+        {
+            provide: BsDatepickerConfig,
+            useValue: <BsDatepickerConfig>{
+                dateInputFormat: 'DD/MM/YYYY',
+                showWeekNumbers: false,
+                containerClass: 'theme-green'
+            }
+        },
+        TesseractProviderService,
+        ScontriniResolver
+    ],
+    bootstrap: [AppComponent],
+    entryComponents:[VideoRecognizerComponent]
 })
 export class AppModule { }

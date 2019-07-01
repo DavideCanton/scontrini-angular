@@ -41,3 +41,11 @@ input.invalid {
 span.datatable-header-cell-label.draggable {
     user-select: none;
 }
+
+.modal-dialog.video-modal {
+    max-width: 90%;
+
+    .modal-content {
+        padding: 16px;
+    }
+}

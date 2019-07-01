@@ -1,5 +1,6 @@
 $w: 640px;
 $h: 480px;
+
 ul {
     li {
         font-size: 12pt;
@@ -9,13 +10,17 @@ ul {
 .video-container {
     display: flex;
     margin-bottom: 10px;
+    justify-content: center;
+
     .canvas-container {
         width: $w;
         height: $h;
+
         canvas {
             width: $w;
             height: $h;
         }
+
         .canvas-overlay {
             width: $w;
             height: $h;

@@ -3,16 +3,20 @@ import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Scontrino } from 'app/models/scontrino';
 import { IScontriniRetriever, SCONTRINI_SERVICE_TOKEN } from 'app/services/interfaces/scontrini-retriever';
+import { IMessageProducer, IMessages, MESSAGE_PRODUCER } from 'app/services/messages/messages-types';
 import { ScontriniStoreService } from 'app/services/scontrini-store';
 import { FormGroupFacade } from 'app/utils/form-group-facade';
 import * as _ from 'lodash';
 import * as moment from 'moment';
-import { BehaviorSubject, Observable, of, Observer } from 'rxjs';
-import { filter, map, switchMap, mergeMap } from 'rxjs/operators';
-import { MESSAGE_PRODUCER, IMessageProducer, IMessages } from 'app/services/messages/messages-types';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap';
+import { BehaviorSubject, Observable, Observer } from 'rxjs';
+import { map, mergeMap } from 'rxjs/operators';
+
+import { VideoRecognizerComponent } from '../video-recognizer/video-recognizer.component';
 
 
-export interface IScontrinoForm {
+export interface IScontrinoForm
+{
     importoDavide: number;
     importoMonia: number;
     descrizione: string;
@@ -24,7 +28,8 @@ export interface IScontrinoForm {
     templateUrl: './scontrino.component.html',
     styleUrls: ['./scontrino.component.scss']
 })
-export class ScontrinoComponent implements OnInit {
+export class ScontrinoComponent implements OnInit
+{
     facade: FormGroupFacade<IScontrinoForm>;
 
     id$ = new BehaviorSubject<number>(0);
@@ -35,12 +40,16 @@ export class ScontrinoComponent implements OnInit {
 
     loadingDesc = false;
 
+    bsModalRef: BsModalRef;
+
     constructor(
         private service: ScontriniStoreService,
+        private modalService: BsModalService,
         @Inject(SCONTRINI_SERVICE_TOKEN) private retriever: IScontriniRetriever,
         @Inject(MESSAGE_PRODUCER) private producer: IMessageProducer<IMessages>,
         private route: ActivatedRoute,
-        private router: Router) {
+        private router: Router)
+    {
 
         this.facade = new FormGroupFacade();
 
@@ -62,9 +71,10 @@ export class ScontrinoComponent implements OnInit {
             }
         },
             {
-                validator: (_g: FormGroup) => {
+                validator: (_g: FormGroup) =>
+                {
                     const { importoDavide, importoMonia } = this.facade.getValues();
-                    if (!_.isNil(importoDavide) || !_.isNil(importoMonia))
+                    if(!_.isNil(importoDavide) || !_.isNil(importoMonia))
                         return null;
 
                     return {
@@ -74,22 +84,36 @@ export class ScontrinoComponent implements OnInit {
             });
     }
 
-    ngOnInit() {
+    ngOnInit()
+    {
+        this.route.paramMap.pipe(
+            map(p => +p.get('v') || 0),
+            map(p => !!p)
+        ).subscribe(v =>
+        {
+            if(v)
+                this.openVideoCapture();
+            else
+                this.close();
+        });
 
         this.route.paramMap.pipe(
             map(p => +p.get('id') || 0),
-            map(id => {
-                if (id)
+            map(id =>
+            {
+                if(id)
                     return this.service.getScontrino(id);
                 else
                     return null;
             }))
-            .subscribe(s => {
+            .subscribe(s =>
+            {
                 this.id$.next(s ? s.id : 0);
 
                 this.producer.title.emit(s && s.id > 0 ? `Modifica scontrino #${s.id}` : 'Creazione nuovo scontrino');
 
-                if (s) {
+                if(s)
+                {
                     this.facade.patchValues({
                         data: s.data.toDate(),
                         descrizione: s.descrizione,
@@ -100,14 +124,16 @@ export class ScontrinoComponent implements OnInit {
                 }
             });
 
-        this.descriptions = Observable.create((observer: Observer<string>) => {
+        this.descriptions = Observable.create((observer: Observer<string>) =>
+        {
             observer.next(this.facade.getValue('descrizione'));
         }).pipe(
             mergeMap((t: string) => this.retriever.getDescriptions(t))
         );
     }
 
-    onSubmit() {
+    onSubmit()
+    {
         const {
             importoDavide,
             importoMonia,
@@ -125,14 +151,29 @@ export class ScontrinoComponent implements OnInit {
         scontrino.descrizione = descrizione;
         scontrino.id = this.id$.getValue();
 
-        this.retriever.save(scontrino).subscribe(() => {
+        this.retriever.save(scontrino).subscribe(() =>
+        {
             this.router.navigateByUrl('/scontrini');
         });
 
         return false;
     }
 
-    changeTypeaheadLoading(value: boolean) {
+    changeTypeaheadLoading(value: boolean)
+    {
         this.loadingDesc = value;
+    }
+
+    openVideoCapture()
+    {
+        this.bsModalRef = this.modalService.show(VideoRecognizerComponent, {
+            class: 'video-modal'
+        });
+        this.bsModalRef.content.closeBtnName = 'Close';
+    }
+
+    close()
+    {
+        this.bsModalRef.hide();
     }
 }

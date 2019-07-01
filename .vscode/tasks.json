@@ -15,6 +15,9 @@
             "label": "Run server",
             "type": "shell",
             "command": "python ${workspaceRoot}\\..\\scontrinibe\\app.py",
+            "options": {
+                "cwd": "${workspaceRoot}\\..\\scontrinibe"
+            },
             "problemMatcher": []
         },
         {

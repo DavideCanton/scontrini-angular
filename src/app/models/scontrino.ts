@@ -4,31 +4,24 @@ import { JsonClass, JsonProperty, SerializeFn } from 'at-json';
 import * as moment from 'moment';
 
 @JsonClass()
-export class Scontrino {
+export class Scontrino
+{
     @JsonProperty()
-    id: number;
+    id: number = 0;
     @JsonDecimal()
-    importoDavide: number;
+    importoDavide: number = 0;
     @JsonDecimal()
-    importoMonia: number;
+    importoMonia: number = 0;
     @JsonProperty()
-    descrizione: string;
+    descrizione: string = '';
     @JsonProperty()
-    personale: boolean;
+    personale: boolean = false;
     @JsonDate()
-    data: moment.Moment;
+    data: moment.Moment | null = null;
 
-    constructor() {
-        this.id = 0;
-        this.importoDavide = null;
-        this.importoMonia = null;
-        this.descrizione = null;
-        this.personale = null;
-        this.data = null;
-    }
-
-    get dateString(): string {
-        if (!this.data)
+    get dateString(): string
+    {
+        if(!this.data)
             return '';
 
         return Utils.formatDateForShow(this.data);

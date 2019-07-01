@@ -9,6 +9,11 @@
                         <input class="form-control"
                                formControlName="importoDavide"
                                type="number">
+                        <button type="button"
+                                class="btn btn-primary"
+                                (click)="openVideoCapture()">
+                            A
+                        </button>
                     </div>
 
                     <div class="form-group col-md-4 col-12">
@@ -70,8 +75,7 @@
                             class="btn btn-success col-4 offset-1">Salva</button>
                     <button [routerLink]="['/scontrini']"
                             type="button"
-                            class="btn btn-danger col-4 offset-2">Torna
-                        alla lista</button>
+                            class="btn btn-danger col-4 offset-2">Torna alla lista</button>
                 </div>
             </form>
         </div>

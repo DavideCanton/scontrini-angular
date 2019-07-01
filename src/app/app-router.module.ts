@@ -14,6 +14,10 @@ const appRoutes: Routes = [
         runGuardsAndResolvers: 'always',
         children: [
             {
+                path: ':id/:v',
+                component: ScontrinoComponent,
+            },
+            {
                 path: ':id',
                 component: ScontrinoComponent,
             },
