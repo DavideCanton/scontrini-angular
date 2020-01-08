@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Scontrino } from 'app/models/scontrino';
-import { IScontriniRetriever } from 'app/services/interfaces/scontrini-retriever';
 import { JsonMapper } from 'at-json';
 import { Observable } from 'rxjs';
 import { map, mapTo } from 'rxjs/operators';
@@ -11,7 +10,7 @@ const URL_SCONTRINI = `/scontrini`;
 const URL_DESC = `/descriptions`;
 
 @Injectable()
-export class ScontriniHttpService implements IScontriniRetriever
+export class ScontriniHttpService
 {
 
     constructor(private http: HttpClient)
@@ -30,19 +29,12 @@ export class ScontriniHttpService implements IScontriniRetriever
         const headers = {
             'Content-Type': 'application/json'
         };
+        const url = `${this.getOrigin()}${URL_SCONTRINI}`;
 
         if(s.id === 0)
-        {
-            return this.http.post(`${this.getOrigin()}${URL_SCONTRINI}`, s.serialize(), { headers }).pipe(
-                mapTo(true)
-            );
-        }
+            return this.http.post(url, s.serialize(), { headers }).pipe(mapTo(true));
         else
-        {
-            return this.http.put(`${this.getOrigin()}${URL_SCONTRINI}`, s.serialize(), { headers }).pipe(
-                mapTo(true)
-            );
-        }
+            return this.http.put(url, s.serialize(), { headers }).pipe(mapTo(true));
     }
 
     getDescriptions(text: string): Observable<string[]>
@@ -53,7 +45,7 @@ export class ScontriniHttpService implements IScontriniRetriever
 
     private getOrigin(): string
     {
-        const o = window.location.hostname;
-        return `http://${o}:${PORT}`;
+        const hostName = window.location.hostname;
+        return `http://${hostName}:${PORT}`;
     }
 }

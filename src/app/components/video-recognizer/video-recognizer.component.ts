@@ -33,17 +33,10 @@ export interface IMessage
 })
 export class VideoRecognizerComponent implements AfterViewInit, OnDestroy
 {
-    @ViewChild('video')
-    video: ElementRef<HTMLVideoElement>;
-
-    @ViewChild('canvasContainer')
-    canvasContainer: ElementRef<HTMLDivElement>;
-
-    @ViewChild('shownCanvas')
-    shownCanvas: ElementRef<HTMLCanvasElement>;
-
-    @ViewChildren(TooltipDirective)
-    tooltips: QueryList<TooltipDirective>;
+    @ViewChild('video', { static: true }) video: ElementRef<HTMLVideoElement>;
+    @ViewChild('canvasContainer', { static: true }) canvasContainer: ElementRef<HTMLDivElement>;
+    @ViewChild('shownCanvas', { static: true }) shownCanvas: ElementRef<HTMLCanvasElement>;
+    @ViewChildren(TooltipDirective) tooltips: QueryList<TooltipDirective>;
 
     videoCanvas: fx.FxCanvas;
     texture: fx.FxTexture;
@@ -103,12 +96,11 @@ export class VideoRecognizerComponent implements AfterViewInit, OnDestroy
     {
         window.cancelAnimationFrame(this.rafHandle);
 
-        const stream = <MediaStream>this.video.nativeElement.srcObject;
+        const stream = this.video.nativeElement.srcObject as MediaStream;
 
         if(stream)
         {
             stream.getAudioTracks().forEach(track => track.stop());
-
             stream.getVideoTracks().forEach(track => track.stop());
         }
     }

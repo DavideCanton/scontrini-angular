@@ -10,36 +10,41 @@ import { TopbarComponent } from './components/topbar/topbar.component';
 import { MessageService } from './services/messages/message.service';
 import { MESSAGE_CONSUMER } from './services/messages/messages-types';
 
-describe('AppComponent', () => {
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        AppComponent,
-        BadgeComponent,
-        TopbarComponent
-      ],
-      imports: [
-        RouterTestingModule,
-        HttpClientTestingModule,
-        BsDatepickerModule.forRoot(),
-      ],
-      providers: [
-        { provide: APP_BASE_HREF, useValue: '/' },
-        {
-          provide: MESSAGE_CONSUMER,
-          useClass: MessageService
-        }
-      ]
-    }).compileComponents();
-  }));
-  it('should create the app', async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app).toBeTruthy();
-  }));
-  it(`should have as title 'app'`, async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('app');
-  }));
+describe('AppComponent', () =>
+{
+    beforeEach(async(() =>
+    {
+        TestBed.configureTestingModule({
+            declarations: [
+                AppComponent,
+                BadgeComponent,
+                TopbarComponent
+            ],
+            imports: [
+                RouterTestingModule,
+                HttpClientTestingModule,
+                BsDatepickerModule.forRoot(),
+            ],
+            providers: [
+                { provide: APP_BASE_HREF, useValue: '/' },
+                {
+                    provide: MESSAGE_CONSUMER,
+                    useClass: MessageService
+                }
+            ]
+        }).compileComponents();
+    }));
+
+    it('should create the app', async(() =>
+    {
+        const fixture = TestBed.createComponent(AppComponent);
+        const app = fixture.debugElement.componentInstance;
+        expect(app).toBeTruthy();
+    }));
+    it(`should have as title 'app'`, async(() =>
+    {
+        const fixture = TestBed.createComponent(AppComponent);
+        const app = fixture.debugElement.componentInstance;
+        expect(app.title).toEqual('app');
+    }));
 });

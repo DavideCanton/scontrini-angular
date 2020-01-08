@@ -15,7 +15,6 @@ import { TopbarComponent } from 'app/components/topbar/topbar.component';
 import { VideoRecognizerComponent } from 'app/components/video-recognizer/video-recognizer.component';
 import { KeysPipe } from 'app/pipes/keys.pipe';
 import { UnsafeHtmlPipe } from 'app/pipes/unsafe-html.pipe';
-import { SCONTRINI_SERVICE_TOKEN } from 'app/services/interfaces/scontrini-retriever';
 import { MessageService } from 'app/services/messages/message.service';
 import { MESSAGE_CONSUMER, MESSAGE_PRODUCER } from 'app/services/messages/messages-types';
 import { ScontriniHttpService } from 'app/services/scontrini-http/scontrini-http.service';
@@ -61,10 +60,6 @@ registerLocaleData(localeIt);
             useValue: 'it-IT'
         },
         {
-            provide: SCONTRINI_SERVICE_TOKEN,
-            useClass: ScontriniHttpService
-        },
-        {
             provide: MESSAGE_PRODUCER,
             useClass: MessageService
         },
@@ -80,10 +75,11 @@ registerLocaleData(localeIt);
                 containerClass: 'theme-green'
             }
         },
+        ScontriniHttpService,
         TesseractProviderService,
         ScontriniResolver
     ],
-    bootstrap: [AppComponent],
-    entryComponents:[VideoRecognizerComponent]
+    entryComponents: [VideoRecognizerComponent],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

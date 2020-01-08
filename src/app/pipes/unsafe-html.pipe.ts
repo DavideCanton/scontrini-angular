@@ -5,7 +5,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class UnsafeHtmlPipe implements PipeTransform {
     constructor(private sanitizer: DomSanitizer) { }
 
-    transform(style) {
+    transform(style: string) {
         return this.sanitizer.bypassSecurityTrustHtml(style);
     }
 
