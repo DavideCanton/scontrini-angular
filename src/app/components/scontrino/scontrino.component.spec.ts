@@ -1,92 +1,87 @@
-import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { fakeAsync } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { createComponentFactory, Spectator } from '@ngneat/spectator';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { Scontrino } from 'app/models/scontrino';
 import { KeysPipe } from 'app/pipes/keys.pipe';
-import { SCONTRINI_SERVICE_TOKEN } from 'app/services/interfaces/scontrini-retriever';
-import { ScontriniMockService } from 'app/services/scontrini-mock/scontrini-mock.service';
+import { MessageService } from 'app/services/messages/message.service';
+import { MESSAGE_PRODUCER } from 'app/services/messages/messages-types';
+import { ScontriniHttpService } from 'app/services/scontrini-http/scontrini-http.service';
 import { ScontriniStoreService } from 'app/services/scontrini-store';
 import { TesseractProviderService } from 'app/services/tesseract-provider/tesseract-provider.service';
 import { ActivatedRouteStub } from 'app/test-utils/activated-route-stub';
 import * as moment from 'moment';
-import { ProgressbarModule, TooltipModule, TypeaheadModule } from 'ngx-bootstrap';
+import { ModalModule, ProgressbarModule, TooltipModule, TypeaheadModule } from 'ngx-bootstrap';
 
 import { VideoRecognizerComponent } from '../video-recognizer/video-recognizer.component';
 import { ScontrinoComponent } from './scontrino.component';
-import { MESSAGE_PRODUCER } from 'app/services/messages/messages-types';
-import { MessageService } from 'app/services/messages/message.service';
 
-describe('ScontrinoComponent', () => {
-  let component: ScontrinoComponent;
-  let fixture: ComponentFixture<ScontrinoComponent>;
-  const activatedRoute = new ActivatedRouteStub();
+describe('ScontrinoComponent', () =>
+{
+    const activatedRoute = new ActivatedRouteStub();
+    let spectator: Spectator<ScontrinoComponent>;
+    const createComponent = createComponentFactory({
+        component: ScontrinoComponent,
+        detectChanges: false,
+        declarations: [
+            ScontrinoComponent,
+            KeysPipe,
+            VideoRecognizerComponent
+        ],
+        imports: [
+            FormsModule,
+            ModalModule.forRoot(),
+            ReactiveFormsModule,
+            TypeaheadModule.forRoot(),
+            ProgressbarModule.forRoot(),
+            RouterTestingModule,
+            AngularFontAwesomeModule,
+            TooltipModule.forRoot(),
+        ],
+        providers: [
+            { provide: MESSAGE_PRODUCER, useClass: MessageService },
+            { provide: ActivatedRoute, useValue: activatedRoute },
+            TesseractProviderService
+        ],
+        mocks: [ScontriniHttpService]
+    });
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        ScontrinoComponent,
-        KeysPipe,
-        VideoRecognizerComponent
-      ],
-      imports: [
-        FormsModule,
-        ReactiveFormsModule,
-        TypeaheadModule.forRoot(),
-        ProgressbarModule.forRoot(),
-        RouterTestingModule,
-        AngularFontAwesomeModule,
-        TooltipModule.forRoot()
-      ],
-      providers: [
-        { provide: SCONTRINI_SERVICE_TOKEN, useClass: ScontriniMockService },
-        { provide: MESSAGE_PRODUCER, useClass: MessageService },
-        { provide: ActivatedRoute, useValue: activatedRoute },
-        TesseractProviderService
-      ]
-    })
-      .compileComponents();
-  }));
+    beforeEach(() =>
+    {
+        spectator = createComponent();
+        const service = spectator.get(ScontriniStoreService);
+        service.scontrini = [new Scontrino()];
+        service.scontrini[0].id = 1;
+        service.scontrini[0].data = moment();
+        activatedRoute.reset();
+    });
 
-  beforeEach(() => {
-    const service = <ScontriniStoreService>TestBed.get(ScontriniStoreService);
-    service.scontrini = [new Scontrino()];
-    service.scontrini[0].id = 1;
-    service.scontrini[0].data = moment();
+    it('should create with a valid scontrino if id is valid', fakeAsync(() =>
+    {
+        activatedRoute.setParamMap({ id: 1 });
+        spectator.detectChanges();
 
-    activatedRoute.reset();
+        spectator.tick();
 
-    fixture = TestBed.createComponent(ScontrinoComponent);
-    component = fixture.componentInstance;
-  });
+        expect(spectator.component.id$.getValue()).toBe(1);
+    }));
 
-  it('should create with a valid scontrino if id is valid', fakeAsync(() => {
-    expect(component).toBeTruthy();
-    activatedRoute.setParamMap({ id: 1 });
-    fixture.detectChanges();
+    it('should create with a new scontrino if id is invalid', fakeAsync(() =>
+    {
+        activatedRoute.setParamMap({ id: 999999 });
+        spectator.detectChanges();
 
-    tick();
+        spectator.tick();
 
-    expect(component.id$.getValue()).toBe(1);
-  }));
+        expect(spectator.component.id$.getValue()).toBe(0);
+    }));
 
-  it('should create with a new scontrino if id is invalid', fakeAsync(() => {
-    expect(component).toBeTruthy();
-    activatedRoute.setParamMap({ id: 999999 });
-    fixture.detectChanges();
+    it('should create with a new scontrino if id is not present', fakeAsync(() =>
+    {
+        spectator.tick();
 
-    tick();
-
-    expect(component.id$.getValue()).toBe(0);
-  }));
-
-  it('should create with a new scontrino if id is not present', fakeAsync(() => {
-    expect(component).toBeTruthy();
-    fixture.detectChanges();
-
-    tick();
-
-    expect(component.id$.getValue()).toBe(0);
-  }));
+        expect(spectator.component.id$.getValue()).toBe(0);
+    }));
 });

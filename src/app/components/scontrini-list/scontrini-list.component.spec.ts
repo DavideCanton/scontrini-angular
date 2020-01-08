@@ -1,15 +1,14 @@
 import { Location } from '@angular/common';
-import { async, ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
+import { fakeAsync, inject } from '@angular/core/testing';
 import { Routes } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { createComponentFactory, Spectator } from '@ngneat/spectator';
+import { DatatableComponent, NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { Scontrino } from 'app/models/scontrino';
-import { SCONTRINI_SERVICE_TOKEN } from 'app/services/interfaces/scontrini-retriever';
 import { MessageService } from 'app/services/messages/message.service';
 import { MESSAGE_PRODUCER } from 'app/services/messages/messages-types';
-import { ScontriniMockService } from 'app/services/scontrini-mock/scontrini-mock.service';
+import { ScontriniHttpService } from 'app/services/scontrini-http/scontrini-http.service';
 import { ScontriniStoreService } from 'app/services/scontrini-store';
 import { BlankComponent } from 'app/test-utils/blank.component';
 import { CommonTestUtilsModule } from 'app/test-utils/common-test-utils.module';
@@ -19,82 +18,77 @@ import * as moment from 'moment';
 import { BadgeComponent } from '../badge/badge.component';
 import { ScontriniListComponent } from './scontrini-list.component';
 
-
 const routes: Routes = [
-  {
-    path: 'scontrini/:id',
-    component: BlankComponent
-  }
+    {
+        path: 'scontrini/:id',
+        component: BlankComponent
+    }
 ];
-describe('ScontriniListComponent', () => {
-  let component: ScontriniListComponent;
-  let fixture: ComponentFixture<ScontriniListComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        NgxDatatableModule,
-        CommonTestUtilsModule,
-        RouterTestingModule.withRoutes(routes),
-        AngularFontAwesomeModule
-      ],
-      declarations: [
-        BadgeComponent,
-        ScontriniListComponent
-      ],
-      providers: [
-        {
-          provide: SCONTRINI_SERVICE_TOKEN,
-          useClass: ScontriniMockService
-        },
-        { provide: MESSAGE_PRODUCER, useClass: MessageService },
-        ScontriniStoreService
-      ]
-    })
-      .compileComponents();
-  }));
-
-  beforeEach(() => {
-    const service: ScontriniStoreService = TestBed.get(ScontriniStoreService);
-
-    service.scontrini = [
-      new Scontrino(),
-      new Scontrino(),
-      new Scontrino(),
-    ];
-
-    _.forEach(service.scontrini, (s, i) => {
-      s.id = i;
-      s.data = moment();
+describe('ScontriniListComponent', () =>
+{
+    let spectator: Spectator<ScontriniListComponent>;
+    const createComponent = createComponentFactory({
+        component: ScontriniListComponent,
+        detectChanges: false,
+        imports: [
+            NgxDatatableModule,
+            CommonTestUtilsModule,
+            RouterTestingModule.withRoutes(routes),
+            AngularFontAwesomeModule
+        ],
+        declarations: [
+            BadgeComponent,
+            ScontriniListComponent
+        ],
+        providers: [
+            { provide: MESSAGE_PRODUCER, useClass: MessageService },
+            ScontriniStoreService
+        ],
+        mocks: [ScontriniHttpService]
     });
 
-    fixture = TestBed.createComponent(ScontriniListComponent);
-    component = fixture.componentInstance;
-  });
+    beforeEach(() =>
+    {
+        spectator = createComponent();
 
-  it('should create', () => {
-    fixture.detectChanges();
-    expect(component).toBeTruthy();
-  });
+        const service: ScontriniStoreService = spectator.get(ScontriniStoreService);
 
-  it('should display the rows correctly', () => {
-    expect(component).toBeTruthy();
+        service.scontrini = [
+            new Scontrino(),
+            new Scontrino(),
+            new Scontrino(),
+        ];
 
-    fixture.detectChanges();
+        _.forEach(service.scontrini, (s, i) =>
+        {
+            s.id = i;
+            s.data = moment();
+        });
+    });
 
-    const body = fixture.debugElement.query(By.css('datatable-body'));
-    const value = parseInt(body.attributes['ng-reflect-row-count'], 10);
-    expect(value).toBe(component.scontrini.length);
-  });
+    it('should create', () =>
+    {
+        spectator.detectChanges();
+        expect(spectator.component).toBeTruthy();
+    });
 
-  it('redirects when clicked row', fakeAsync(inject([Location], (location: Location) => {
-    expect(component).toBeTruthy();
+    it('should display the rows correctly', () =>
+    {
+        spectator.detectChanges();
+        expect(spectator.component).toBeTruthy();
 
-    fixture.detectChanges();
+        const { rowCount } = spectator.query(DatatableComponent);
+        expect(rowCount).toBe(spectator.component.scontrini.length);
+    });
 
-    component.select(component.scontrini[0]);
-    tick();
+    it('redirects when clicked row', fakeAsync(inject([Location], (location: Location) =>
+    {
+        spectator.detectChanges();
 
-    expect(location.isCurrentPathEqualTo(`/scontrini/${component.scontrini[0].id}`)).toBe(true);
-  })));
+        spectator.component.select(spectator.component.scontrini[0]);
+        spectator.tick();
+
+        expect(location.isCurrentPathEqualTo(`/scontrini/${spectator.component.scontrini[0].id}`)).toBe(true);
+    })));
 });

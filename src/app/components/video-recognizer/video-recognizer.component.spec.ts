@@ -1,38 +1,35 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
+import { createComponentFactory, Spectator } from '@ngneat/spectator';
+import { TesseractProviderService } from 'app/services/tesseract-provider/tesseract-provider.service';
 import { ProgressbarModule, TooltipModule } from 'ngx-bootstrap';
 
 import { VideoRecognizerComponent } from './video-recognizer.component';
-import { TesseractProviderService } from 'app/services/tesseract-provider/tesseract-provider.service';
 
-describe('VideoRecognizerComponent', () => {
-  let component: VideoRecognizerComponent;
-  let fixture: ComponentFixture<VideoRecognizerComponent>;
+describe('VideoRecognizerComponent', () =>
+{
+    let spectator: Spectator<VideoRecognizerComponent>;
+    const createComponent = createComponentFactory({
+        component: VideoRecognizerComponent,
+        declarations: [
+            VideoRecognizerComponent
+        ],
+        imports: [
+            TooltipModule.forRoot(),
+            ProgressbarModule.forRoot(),
+            FormsModule
+        ],
+        providers: [
+            TesseractProviderService
+        ]
+    });
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        VideoRecognizerComponent
-      ],
-      imports: [
-        TooltipModule.forRoot(),
-        ProgressbarModule.forRoot(),
-        FormsModule
-      ],
-      providers: [
-        TesseractProviderService
-      ]
-    })
-      .compileComponents();
-  }));
+    beforeEach(() =>
+    {
+        spectator = createComponent();
+    });
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(VideoRecognizerComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () =>
+    {
+        expect(spectator.component).toBeTruthy();
+    });
 });
