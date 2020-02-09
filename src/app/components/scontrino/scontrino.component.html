@@ -55,8 +55,8 @@
                                (typeaheadLoading)="changeTypeaheadLoading($event)">
                         <div class="loading-desc">
                             <ng-container *ngIf="loadingDesc">
-                                <fa name="refresh"
-                                    animation="spin"></fa>&nbsp;Caricamento...
+                                <fa [icon]="['fa', 'refresh']"
+                                    [spin]="true"></fa>&nbsp;Caricamento...
                             </ng-container>
                         </div>
                     </div>

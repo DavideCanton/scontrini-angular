@@ -3,7 +3,6 @@ import * as _ from 'lodash';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 import { ISelectModel, SelectModelManager } from './select-model';
-import { getSafe } from './utils';
 import { CUSTOM_VALIDATOR_SYMBOL } from './validators';
 
 export enum ValidationStatus {
@@ -42,9 +41,7 @@ export class FormGroupFacade<T> {
       return new FormControl(v.initialValue, v.validator, v.asyncValidator);
     });
 
-    this.innerGroup = new FormGroup(values,
-      getSafe(extra, 'validator'),
-      getSafe(extra, 'asyncValidator'));
+    this.innerGroup = new FormGroup(values, extra?.validator, extra?.asyncValidator);
 
     this.selectModels = {};
     const selectModelKeys = this.computeSelectModels();

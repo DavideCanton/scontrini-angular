@@ -15,7 +15,7 @@ declare namespace fx {
     }
 
     interface FxTexture {
-        loadContentsOf(video: HTMLVideoElement);
+        loadContentsOf(video: HTMLVideoElement): void;
     }
 }
 

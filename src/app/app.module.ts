@@ -4,8 +4,9 @@ import localeIt from '@angular/common/locales/it';
 import { LOCALE_ID, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { AppRouterModule } from 'app/app-router.module';
 import { AppComponent } from 'app/app.component';
 import { BadgeComponent } from 'app/components/badge/badge.component';
@@ -20,9 +21,14 @@ import { MESSAGE_CONSUMER, MESSAGE_PRODUCER } from 'app/services/messages/messag
 import { ScontriniHttpService } from 'app/services/scontrini-http/scontrini-http.service';
 import { ScontriniResolver } from 'app/services/scontrini.resolver';
 import { TesseractProviderService } from 'app/services/tesseract-provider/tesseract-provider.service';
-import { BsDatepickerConfig, BsDatepickerModule, CollapseModule, ModalModule, ProgressbarModule, TooltipModule, TypeaheadModule } from 'ngx-bootstrap';
 import { defineLocale } from 'ngx-bootstrap/chronos';
+import { CollapseModule } from 'ngx-bootstrap/collapse';
+import { BsDatepickerConfig, BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { itLocale } from 'ngx-bootstrap/locale';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 
 defineLocale('it', itLocale);
 registerLocaleData(localeIt);
@@ -52,7 +58,8 @@ registerLocaleData(localeIt);
         ModalModule.forRoot(),
         BsDatepickerModule.forRoot(),
         TypeaheadModule.forRoot(),
-        AngularFontAwesomeModule
+        FontAwesomeModule,
+        BrowserAnimationsModule
     ],
     providers: [
         {
@@ -79,7 +86,6 @@ registerLocaleData(localeIt);
         TesseractProviderService,
         ScontriniResolver
     ],
-    entryComponents: [VideoRecognizerComponent],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

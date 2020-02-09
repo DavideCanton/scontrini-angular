@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, QueryList, ViewChild, ViewChildren, ViewEncapsulation } from '@angular/core';
 import { TesseractProviderService } from 'app/services/tesseract-provider/tesseract-provider.service';
-import * as _ from 'lodash';
+import { isNumber, last } from 'lodash';
 import { TooltipDirective } from 'ngx-bootstrap/tooltip';
 import * as Tesseract from 'tesseract.js';
 
@@ -33,9 +33,9 @@ export interface IMessage
 })
 export class VideoRecognizerComponent implements AfterViewInit, OnDestroy
 {
-    @ViewChild('video', { static: true }) video: ElementRef<HTMLVideoElement>;
-    @ViewChild('canvasContainer', { static: true }) canvasContainer: ElementRef<HTMLDivElement>;
-    @ViewChild('shownCanvas', { static: true }) shownCanvas: ElementRef<HTMLCanvasElement>;
+    @ViewChild('video') video: ElementRef<HTMLVideoElement>;
+    @ViewChild('canvasContainer') canvasContainer: ElementRef<HTMLDivElement>;
+    @ViewChild('shownCanvas') shownCanvas: ElementRef<HTMLCanvasElement>;
     @ViewChildren(TooltipDirective) tooltips: QueryList<TooltipDirective>;
 
     videoCanvas: fx.FxCanvas;
@@ -144,7 +144,7 @@ export class VideoRecognizerComponent implements AfterViewInit, OnDestroy
 
     updateMessages(message: IMessage)
     {
-        if(!_.isNumber(message.progress))
+        if(!isNumber(message.progress))
             message.progress = 100;
         else
         {
@@ -152,9 +152,9 @@ export class VideoRecognizerComponent implements AfterViewInit, OnDestroy
             message.progress = Math.round(message.progress * 100) / 100;
         }
 
-        const last: IMessage | null = _.last(this.messages) || null;
+        const lastMessage = last(this.messages) || null;
 
-        if(last && last.status === message.status)
+        if(lastMessage?.status === message.status)
             this.messages[this.messages.length - 1] = message;
         else
             this.messages.push(message);
@@ -214,7 +214,7 @@ export class VideoRecognizerComponent implements AfterViewInit, OnDestroy
 
     private drawBoxes()
     {
-        const vctx = this.shownCanvas.nativeElement.getContext('2d');
+        const vctx = this.shownCanvas.nativeElement.getContext('2d')!;
         this.rects = [];
 
         this.out.words

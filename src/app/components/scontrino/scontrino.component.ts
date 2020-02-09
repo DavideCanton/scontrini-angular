@@ -62,7 +62,7 @@ export class ScontrinoComponent implements OnInit
         }, { validator: () => this.validateGroup() });
     }
 
-    private validateGroup(): ValidationErrors
+    private validateGroup(): ValidationErrors | null
     {
         const { importoDavide, importoMonia } = this.facade.getValues();
         if(!_.isNil(importoDavide) || !_.isNil(importoMonia))
@@ -76,7 +76,7 @@ export class ScontrinoComponent implements OnInit
     ngOnInit()
     {
         this.route.paramMap.pipe(
-            map(params => +params.get('v') || 0),
+            map(params => +(params.get('v') || 0)),
             map(param => !!param)
         ).subscribe(value =>
         {
@@ -87,7 +87,7 @@ export class ScontrinoComponent implements OnInit
         });
 
         this.route.paramMap.pipe(
-            map(params => +params.get('id') || 0),
+            map(params => +(params.get('id') || 0)),
             map(id =>
             {
                 if(id)
@@ -104,7 +104,7 @@ export class ScontrinoComponent implements OnInit
                 if(s)
                 {
                     this.facade.patchValues({
-                        data: s.data.toDate(),
+                        data: s.data?.toDate(),
                         descrizione: s.descrizione,
                         importoDavide: s.importoDavide,
                         importoMonia: s.importoMonia,

@@ -18,10 +18,10 @@ export class ScontriniListComponent implements OnInit
     columns: TableColumn[];
     scontrini: Scontrino[];
 
-    @ViewChild('isPersonaleRow', { static: true }) isPersonaleRow: TemplateRef<any>;
-    @ViewChild('currencyTemplate', { static: true }) currencyTemplate: TemplateRef<any>;
-    @ViewChild('dateTemplate', { static: true }) dateTemplate: TemplateRef<any>;
-    @ViewChild(DatatableComponent, { static: true }) datatable: DatatableComponent;
+    @ViewChild('isPersonaleRow') isPersonaleRow: TemplateRef<any>;
+    @ViewChild('currencyTemplate') currencyTemplate: TemplateRef<any>;
+    @ViewChild('dateTemplate') dateTemplate: TemplateRef<any>;
+    @ViewChild(DatatableComponent) datatable: DatatableComponent;
 
     constructor(
         private store: ScontriniStoreService,

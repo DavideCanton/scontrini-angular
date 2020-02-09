@@ -8,9 +8,13 @@
     "sourceMap": true,
     "declaration": false,
     "moduleResolution": "node",
+    "strictNullChecks": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "target": "es2015",  
+    "types": [
+        "./src/typings"
+    ],
     "lib": [
       "es2017",
       "dom"
