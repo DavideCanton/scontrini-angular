@@ -9,8 +9,8 @@ import { FormGroupFacade } from 'app/utils/form-group-facade';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
-import { BehaviorSubject, Observable, Observer } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
+import { Observable, Subscriber } from 'rxjs';
+import { mergeMap } from 'rxjs/operators';
 
 import { VideoRecognizerComponent } from '../video-recognizer/video-recognizer.component';
 
@@ -32,8 +32,6 @@ export class ScontrinoComponent implements OnInit
 {
     facade: FormGroupFacade<IScontrinoForm>;
 
-    id$ = new BehaviorSubject<number>(0);
-
     isCollapsed = true;
 
     descriptions: Observable<string[]>;
@@ -41,6 +39,8 @@ export class ScontrinoComponent implements OnInit
     loadingDesc = false;
 
     bsModalRef: BsModalRef;
+
+    id: number;
 
     constructor(
         private service: ScontriniStoreService,
@@ -75,47 +75,29 @@ export class ScontrinoComponent implements OnInit
 
     ngOnInit()
     {
-        this.route.paramMap.pipe(
-            map(params => +(params.get('v') || 0)),
-            map(param => !!param)
-        ).subscribe(value =>
+        this.route.data.subscribe(data =>
         {
-            if(value)
-                this.openVideoCapture();
-            else
-                this.close();
+            const { scontrino } = data;
+
+            this.producer.title.emit(scontrino && scontrino.id > 0 ? `Modifica scontrino #${scontrino.id}` : 'Creazione nuovo scontrino');
+
+            this.id = scontrino?.id ?? 0;
+
+            if(scontrino)
+            {
+                this.facade.patchValues({
+                    data: scontrino.data?.toDate(),
+                    descrizione: scontrino.descrizione,
+                    importoDavide: scontrino.importoDavide,
+                    importoMonia: scontrino.importoMonia,
+                    personale: scontrino.personale
+                });
+            }
         });
 
-        this.route.paramMap.pipe(
-            map(params => +(params.get('id') || 0)),
-            map(id =>
-            {
-                if(id)
-                    return this.service.getScontrino(id);
-                else
-                    return null;
-            }))
-            .subscribe(s =>
-            {
-                this.id$.next(s ? s.id : 0);
-
-                this.producer.title.emit(s && s.id > 0 ? `Modifica scontrino #${s.id}` : 'Creazione nuovo scontrino');
-
-                if(s)
-                {
-                    this.facade.patchValues({
-                        data: s.data?.toDate(),
-                        descrizione: s.descrizione,
-                        importoDavide: s.importoDavide,
-                        importoMonia: s.importoMonia,
-                        personale: s.personale
-                    });
-                }
-            });
-
-        this.descriptions = Observable.create((observer: Observer<string>) =>
+        this.descriptions = new Observable<string>((s: Subscriber<string>) =>
         {
-            observer.next(this.facade.getValue('descrizione'));
+            s.next(this.facade.getValue('descrizione'));
         }).pipe(
             mergeMap((t: string) => this.retriever.getDescriptions(t))
         );
@@ -138,7 +120,7 @@ export class ScontrinoComponent implements OnInit
         scontrino.personale = personale;
         scontrino.data = moment(data);
         scontrino.descrizione = descrizione;
-        scontrino.id = this.id$.getValue();
+        scontrino.id = this.id;
 
         this.retriever.save(scontrino).subscribe(() =>
         {

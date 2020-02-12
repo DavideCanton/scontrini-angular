@@ -2,9 +2,9 @@ import { Location } from '@angular/common';
 import { fakeAsync, inject } from '@angular/core/testing';
 import { Routes } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { createComponentFactory, Spectator } from '@ngneat/spectator';
 import { DatatableComponent, NgxDatatableModule } from '@swimlane/ngx-datatable';
-import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { Scontrino } from 'app/models/scontrino';
 import { MessageService } from 'app/services/messages/message.service';
 import { MESSAGE_PRODUCER } from 'app/services/messages/messages-types';
@@ -35,7 +35,7 @@ describe('ScontriniListComponent', () =>
             NgxDatatableModule,
             CommonTestUtilsModule,
             RouterTestingModule.withRoutes(routes),
-            AngularFontAwesomeModule
+            FontAwesomeModule
         ],
         declarations: [
             BadgeComponent,
@@ -78,7 +78,7 @@ describe('ScontriniListComponent', () =>
         spectator.detectChanges();
         expect(spectator.component).toBeTruthy();
 
-        const { rowCount } = spectator.query(DatatableComponent);
+        const { rowCount } = spectator.query(DatatableComponent)!;
         expect(rowCount).toBe(spectator.component.scontrini.length);
     });
 
